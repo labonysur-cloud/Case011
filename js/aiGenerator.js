@@ -3,12 +3,16 @@
    AI-powered case generation using HuggingFace
    =================================== */
 
-// HuggingFace API configuration
+// HuggingFace API configuration (Legacy/Fallback)
 const HUGGINGFACE_API = 'https://api-inference.huggingface.co/models/';
 const AI_MODELS = {
     textGeneration: 'mistralai/Mistral-7B-Instruct-v0.2',
     summarization: 'facebook/bart-large-cnn'
 };
+
+// Oracle Engine configuration (Transformers.js Client-side AI)
+let oracleEngine = null;
+const ORACLE_MODEL = 'Xenova/gpt4all-mini';
 
 /**
  * Generate AI-powered case briefing
@@ -307,21 +311,116 @@ function determineCategory(topic) {
 }
 
 /**
- * Enhanced case generator with AI support
+ * Initialize the Oracle Engine (Deep Archival Decryption)
+ * @param {Function} progressCallback - Callback for download progress
+ * @returns {Promise<boolean>} Success status
+ */
+async function initOracleEngine(progressCallback) {
+    if (oracleEngine) return true;
+
+    // Thematic status messages based on progress
+    const getThematicMessage = (p) => {
+        if (p < 30) return "ESTABLISHING SECURE CONNECTION...";
+        if (p < 60) return "DECRYPTING ARCHIVAL DATA STREAMS...";
+        if (p < 90) return "RECONSTRUCTING HISTORICAL FRAGMENTS...";
+        return "FINALIZING DEEP ANALYSIS...";
+    };
+
+    const statusText = document.getElementById('aiStatusText');
+    const progressBar = document.getElementById('aiProgressBar');
+    const progressPercent = document.getElementById('aiProgressPercent');
+
+    try {
+        const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.3.0');
+
+        oracleEngine = await pipeline('text-generation', ORACLE_MODEL, {
+            progress_callback: (p) => {
+                if (p.status === 'progress') {
+                    if (statusText) statusText.textContent = getThematicMessage(p.progress);
+                    if (progressBar) progressBar.style.width = `${p.progress}%`;
+                    if (progressPercent) progressPercent.textContent = `${Math.round(p.progress)}%`;
+                    if (progressCallback) progressCallback(p.progress);
+                }
+            }
+        });
+        return true;
+    } catch (error) {
+        console.error('Oracle Engine failed to boot:', error);
+        return false;
+    }
+}
+
+/**
+ * Generate case using the Oracle Engine
+ * @param {string} seed - Case seed/hash
+ * @returns {Promise<Object>} Generated case
+ */
+async function generateWithOracle(seed) {
+    if (!oracleEngine) {
+        const booted = await initOracleEngine();
+        if (!booted) return null;
+    }
+
+    const statusText = document.getElementById('aiStatusText');
+    if (statusText) statusText.textContent = "RUNNING DEEP HEURISTIC ANALYSIS...";
+
+    const prompt = `
+    System: Act as an expert criminal investigator and historian. Generate a detailed mystery investigation file in JSON format.
+    Case ID: ${seed}
+    Requirement: 3 paragraphs of briefing, 3 artifacts with URLs.
+    Format: JSON only.
+    
+    Response: { "title": "The name of the mystery", "briefing": "...", "artifacts": [...] }`;
+
+    try {
+        const result = await oracleEngine(prompt, {
+            max_new_tokens: 600,
+            temperature: 0.8,
+            do_sample: true,
+            top_p: 0.95
+        });
+
+        const text = result[0].generated_text.split('Response:')[1] || result[0].generated_text;
+        const jsonMatch = text.match(/\{[\s\S]*\}/);
+
+        if (jsonMatch) {
+            const caseData = JSON.parse(jsonMatch[0]);
+            return {
+                ...caseData,
+                id: `oracle-${seed}`,
+                category: determineCategory(caseData.title),
+                difficulty: ['easy', 'medium', 'hard'][hashString(seed) % 3],
+                aiGenerated: true,
+                oracleEngine: true
+            };
+        }
+        return null;
+    } catch (error) {
+        console.error('Oracle Analysis failed:', error);
+        return null;
+    }
+}
+
+/**
+ * Enhanced case generator (Oracle Primary)
  * @param {string} hash - Case hash
  * @param {boolean} useAI - Whether to use AI generation
  * @returns {Promise<Object>} Case data
  */
-async function generateCaseWithAI(hash, useAI = false) {
-    if (useAI) {
-        // Try AI generation first
-        const aiCase = await createAIGeneratedCase(hash);
-        if (aiCase) {
-            return aiCase;
-        }
+async function generateCaseWithAI(hash, useAI = true) {
+    // Primary: Oracle Engine (Browser-side)
+    try {
+        const oracleCase = await generateWithOracle(hash);
+        if (oracleCase) return oracleCase;
+    } catch (e) {
+        console.warn('Oracle Engine failed, falling back to cloud...');
     }
 
-    // Fallback to template-based generation
+    // Secondary: Cloud Fallback
+    const aiCase = await createAIGeneratedCase(hash);
+    if (aiCase) return aiCase;
+
+    // Tertiary: Static Template
     return generateCase(hash);
 }
 

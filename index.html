@@ -177,13 +177,12 @@
             setTimeout(typeWriter, 500);
         });
 
-        // Open case button - AI works automatically in background
+        // Open case button - Oracle Engine works automatically
         document.getElementById('openCaseBtn').addEventListener('click', (e) => {
             e.preventDefault();
             const caseHash = generateCaseHash();
-            console.log('Opening case:', caseHash);
-            // AI is always enabled but invisible to user
-            window.location.href = `case.html?hash=${caseHash}&ai=true`;
+            // No parameters needed, AI is now the default
+            window.location.href = `case.html?hash=${caseHash}`;
         });
 
         // Animate case count

@@ -17,6 +17,24 @@
 
 <body class="case-page">
     <div class="grain-overlay"></div>
+    <div id="decryptionOverlay" class="decryption-overlay">
+        <div class="decryption-content">
+            <h2 class="decryption-header glitch-text">ACCESSING DEEP ARCHIVES...</h2>
+            <div id="aiStatusText" class="decryption-status">ESTABLISHING ANALYTICAL CONNECTION...</div>
+            <div class="decryption-bar-container">
+                <div id="aiProgressBar" class="decryption-bar"></div>
+            </div>
+            <div class="decryption-meta">
+                <span id="aiProgressPercent">0%</span>
+                <span>SECURE ARCHIVAL LINK</span>
+            </div>
+            <p
+                style="font-size: 0.7rem; color: var(--color-text-muted); margin-top: 2rem; border-top: 1px dashed var(--color-border); padding-top: 1rem;">
+                * Warning: High-resolution archival reconstruction in progress. One-time data download required
+                (~400MB).
+            </p>
+        </div>
+    </div>
 
     <header class="case-header">
         <div class="header-content">
@@ -41,14 +59,14 @@
                     <span class="classification-label">CLASSIFIED</span>
                 </div>
                 <div class="briefing-content">
-                    <h3 class="case-name" id="caseName">Loading...</h3>
+                    <h3 class="case-name" id="caseName">DECRYPTING...</h3>
                     <div class="case-details">
                         <span class="detail-item">Category: <strong id="caseCategory"></strong></span>
                         <span class="detail-item">Difficulty: <strong id="caseDifficulty"></strong></span>
                         <span class="detail-item">Date Opened: <strong id="dateOpened"></strong></span>
                     </div>
                     <div class="briefing-text" id="briefingText">
-                        <p>Loading case details...</p>
+                        <p>Awaiting analytical reconstruction...</p>
                     </div>
                 </div>
             </section>
@@ -138,15 +156,29 @@ The truth is in the details."></textarea>
                 let caseData;
 
                 if (useAI) {
-                    // Show generic loading indicator (don't mention AI)
-                    document.getElementById('caseBriefing').innerHTML = '<p style="color: var(--color-accent-cyan);">Loading case details... This may take a moment.</p>';
+                    // Show initialization status
+                    const statusBox = document.getElementById('aiStatusBox');
+                    const statusText = document.getElementById('aiStatusText');
+                    const progressBar = document.getElementById('aiProgressBar');
+                    const progressPercent = document.getElementById('aiProgressPercent');
+
+                    statusBox.style.display = 'block';
+                    document.getElementById('caseBriefing').innerHTML = '<p style="color: var(--color-accent-cyan); text-align: center; margin-top: 2rem;">STANDBY: Processing signal from browser-side intelligence model...</p>';
 
                     try {
+                        // Initialize and generate with client-side AI
                         caseData = await generateCaseWithAI(caseHash, true);
-                        // Don't show AI indicator - keep it invisible
+
+                        // Callback for progress if we provide it to initClientAI in aiGenerator.js
+                        // (We'll update aiGenerator.js to use these UI elements if they exist)
+
+                        statusBox.style.display = 'none'; // Hide after success
                     } catch (error) {
                         console.error('AI generation failed:', error);
+                        statusText.textContent = 'SYSTEM ERROR: Falling back to static archives...';
+                        statusText.style.color = 'var(--color-accent-red)';
                         caseData = generateCase(caseHash);
+                        setTimeout(() => statusBox.style.display = 'none', 3000);
                     }
                 } else {
                     caseData = generateCase(caseHash);
@@ -170,49 +202,68 @@ The truth is in the details."></textarea>
 
                 // Load artifacts
                 const artifactsGrid = document.getElementById('artifactsGrid');
-                document.getElementById('artifactCount').textContent = `${caseData.artifacts.length} items`;
+                const artifactCount = document.getElementById('artifactCount');
+                if (artifactCount) artifactCount.textContent = `${caseData.artifacts.length} items`;
 
-                caseData.artifacts.forEach((artifact, index) => {
-                    const artifactCard = document.createElement('div');
-                    artifactCard.className = 'artifact-card';
-                    artifactCard.innerHTML = `
-                        <div class="artifact-header">
-                            <span class="artifact-number">ARTIFACT ${String(index + 1).padStart(2, '0')}</span>
-                            <span class="artifact-type">${artifact.type.toUpperCase()}</span>
-                        </div>
-                        <h4 class="artifact-title">${artifact.title}</h4>
-                        <p class="artifact-desc">${artifact.description || ''}</p>
-                        <a href="${artifact.url}" target="_blank" class="artifact-link" rel="noopener noreferrer">
-                            View Evidence &#8599;
-                        </a>
-                    `;
-                    artifactsGrid.appendChild(artifactCard);
-                });
-            }
-
-            // Load the case
-            loadCase();
-
-            // Initialize notebook
-            initNotebook(caseHash);
-
-            // Share button
-            document.getElementById('shareBtn').addEventListener('click', () => {
-                const shareUrl = window.location.href;
-                navigator.clipboard.writeText(shareUrl).then(() => {
-                    alert('Case link copied to clipboard!');
-                });
-            });
-
-            // Submit button
-            document.getElementById('submitBtn').addEventListener('click', () => {
-                const notebook = document.getElementById('notebookArea').value;
-                if (notebook.trim().length < 100) {
-                    alert('Please write at least 100 characters in your investigation notes before submitting.');
-                    return;
+                if (artifactsGrid) {
+                    artifactsGrid.innerHTML = '';
+                    caseData.artifacts.forEach((artifact, index) => {
+                        const artifactCard = document.createElement('div');
+                        artifactCard.className = 'artifact-card';
+                        artifactCard.innerHTML = `
+                                <div class="artifact-header">
+                                    <span class="artifact-number">ARTIFACT ${String(index + 1).padStart(2, '0')}</span>
+                                    <span class="artifact-type">${artifact.type.toUpperCase()}</span>
+                                </div>
+                                <h4 class="artifact-title">${artifact.title}</h4>
+                                <p class="artifact-desc">${artifact.description || ''}</p>
+                                <a href="${artifact.url}" target="_blank" class="artifact-link" rel="noopener noreferrer">
+                                    View Evidence &#8599;
+                                </a>
+                            `;
+                        artifactsGrid.appendChild(artifactCard);
+                    });
                 }
-                window.location.href = `submit.html?hash=${caseHash}`;
+
+                // Success: Hide cinematic overlay
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    setTimeout(() => overlay.style.display = 'none', 1000);
+                }, 500);
+
+            } catch (error) {
+                console.error('Decryption failed:', error);
+                overlay.style.display = 'none';
+                alert('CRITICAL ARCHIVO ERROR: System Reverting to Manual Backups.');
+                // Fallback to static case
+                const fallbackData = generateCase(caseHash);
+                location.reload(); // Hard fallback for now
+            }
+        }
+
+        // Load the case
+        loadCase();
+
+        // Initialize notebook
+        initNotebook(caseHash);
+
+        // Share button
+        document.getElementById('shareBtn').addEventListener('click', () => {
+            const shareUrl = window.location.href;
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('Case link copied to clipboard!');
             });
+        });
+
+        // Submit button
+        document.getElementById('submitBtn').addEventListener('click', () => {
+            const notebook = document.getElementById('notebookArea').value;
+            if (notebook.trim().length < 100) {
+                alert('Please write at least 100 characters in your investigation notes before submitting.');
+                return;
+            }
+            window.location.href = `submit.html?hash=${caseHash}`;
+        });
         }
     </script>
 </body>
