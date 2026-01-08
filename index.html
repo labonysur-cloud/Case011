@@ -46,6 +46,7 @@
         </section>
 
         <section class="info-section">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">HOW IT WORKS</h2>
             <div class="info-grid">
                 <div class="info-card">
                     <h3 class="info-title">INVESTIGATE</h3>
@@ -65,13 +66,68 @@
             </div>
         </section>
 
-        <footer class="landing-footer">
-            <nav class="footer-nav">
-                <a href="archive.html" class="footer-link">Community Archive</a>
-                <a href="#about" class="footer-link">About</a>
-                <a href="#guidelines" class="footer-link">Guidelines</a>
-            </nav>
-            <p class="footer-text">A platform for critical thinkers and curious minds</p>
+        <section class="rules-section" id="rules">
+            <h2 class="section-title">RULES OF THE GAME</h2>
+            <ul class="rules-list">
+                <li class="rule-item">Stay Objective: Use real-world evidence and logical reasoning. Avoid baseless
+                    speculation.</li>
+                <li class="rule-item">Be Thorough: Document your research process and reference artifacts clearly.</li>
+                <li class="rule-item">Collaborate: Reopen archived cases to add new perspectives or theories.</li>
+                <li class="rule-item">Respect Privacy: This platform covers real events. Maintain a respectful tone in
+                    your investigations.</li>
+            </ul>
+        </section>
+
+        <section class="disclaimer-section" id="disclaimer">
+            <h2 class="section-title">DISCLAIMER</h2>
+            <p class="disclaimer-text">
+                Case011 is an investigation simulation platform. All cases are based on real-world events, mysteries,
+                and archaeological findings. We do not claim to have the "true" solution to these unsolved cases. The
+                platform is for educational, creative, and critical thinking purposes only. Use of external links to
+                research is encouraged, but please browse the internet safely.
+            </p>
+        </section>
+
+        <section class="catalog-cta"
+            style="margin: 4rem 0; padding: 2rem; border: 2px dashed var(--color-accent-amber);">
+            <h2 class="section-title">DISCOVER NEW MYSTERIES</h2>
+            <p>Explore our full database of real-world cases categorized by field of study.</p>
+            <a href="mysteries.html" class="primary-btn" style="margin-top: 1rem;">
+                <span class="btn-text">VIEW CASE CATALOG</span>
+            </a>
+        </section>
+
+        <footer class="footer-review-section">
+            <div class="review-form">
+                <h2 class="section-title">SHARE YOUR EXPERIENCE</h2>
+                <p style="margin-bottom: 1.5rem; color: var(--color-text-secondary);">How can we improve Case011? Send
+                    us your thoughts, theories, or queries.</p>
+
+                <form action="https://formspree.io/f/mpqwvnyz" method="POST">
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" name="email" class="form-input" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Your Message</label>
+                        <textarea name="message" class="form-textarea" placeholder="Tell us about your experience..."
+                            required style="height: 120px;"></textarea>
+                    </div>
+                    <button type="submit" class="primary-btn review-btn">
+                        <span class="btn-text">SEND FEEDBACK</span>
+                    </button>
+                </form>
+            </div>
+
+            <div class="landing-footer" style="margin-top: 4rem;">
+                <nav class="footer-nav">
+                    <a href="archive.html" class="footer-link">Community Archive</a>
+                    <a href="mysteries.html" class="footer-link">Case Catalog</a>
+                    <a href="#rules" class="footer-link">Rules</a>
+                    <a href="#disclaimer" class="footer-link">Disclaimer</a>
+                </nav>
+                <p class="footer-text">CASE011 - Archives of the Unexplained</p>
+            </div>
         </footer>
     </main>
 

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Catalog - Case011</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Special+Elite&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="archive-page">
+    <div class="grain-overlay"></div>
+
+    <header class="case-header">
+        <div class="header-content">
+            <a href="index.html" class="back-link">&#8592; Back to Home</a>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="assets/logo.png" alt="Logo" class="header-logo">
+                <h1 class="case-title">CASE CATALOG</h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="archive-container">
+        <section class="archive-header-section">
+            <p class="archive-desc">
+                Explore our curated database of real-world unsolved mysteries. Filter by category or search for specific
+                case files.
+            </p>
+        </section>
+
+        <section class="filter-section">
+            <div class="filter-controls">
+                <select id="categoryFilter" class="filter-select">
+                    <option value="all">All Categories</option>
+                    <option value="cryptographic">Cryptographic</option>
+                    <option value="historical">Historical</option>
+                    <option value="archaeological">Archaeological</option>
+                    <option value="scientific">Scientific</option>
+                    <option value="disappearance">Disappearance</option>
+                </select>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search mystery database...">
+            </div>
+        </section>
+
+        <section class="catalog-section">
+            <div class="catalog-grid" id="catalogGrid">
+                <!-- Mystery cases will be loaded here -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer-review-section">
+        <div class="landing-footer" style="margin-top: 0;">
+            <nav class="footer-nav">
+                <a href="archive.html" class="footer-link">Community Archive</a>
+                <a href="index.html#rules" class="footer-link">Rules</a>
+                <a href="index.html#disclaimer" class="footer-link">Disclaimer</a>
+            </nav>
+            <p class="footer-text">CASE011 - Archives of the Unexplained</p>
+        </div>
+    </footer>
+
+    <script src="js/utils.js"></script>
+    <script src="js/caseGenerator.js"></script>
+    <script>
+        // Display catalog
+        function displayCatalog(cases) {
+            const grid = document.getElementById('catalogGrid');
+            grid.innerHTML = '';
+
+            cases.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'mystery-card animate-fadeIn';
+                card.innerHTML = `
+                    <div class="mystery-category">${item.category}</div>
+                    <h3 class="mystery-title">${item.title}</h3>
+                    <p class="mystery-desc" style="font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.4;">
+                        ${truncateText(item.briefing.replace(/<[^>]*>/g, ''), 150)}
+                    </p>
+                    <div class="mystery-meta">
+                        <span>Difficulty: ${item.difficulty.toUpperCase()}</span>
+                        <a href="case.html?hash=${item.id}&ai=true" class="investigate-link" style="color: var(--color-accent-amber); font-weight: bold;">
+                            INVESTIGATE &#8594;
+                        </a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter functionality
+        function filterCatalog() {
+            const category = document.getElementById('categoryFilter').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+
+            let filtered = [...CASE_SEEDS];
+
+            if (category !== 'all') {
+                filtered = filtered.filter(c => c.category === category);
+            }
+
+            if (search) {
+                filtered = filtered.filter(c =>
+                    c.title.toLowerCase().includes(search) ||
+                    c.briefing.toLowerCase().includes(search)
+                );
+            }
+
+            displayCatalog(filtered);
+        }
+
+        document.getElementById('categoryFilter').addEventListener('change', filterCatalog);
+        document.getElementById('searchInput').addEventListener('input', filterCatalog);
+
+        // Initial display
+        displayCatalog(CASE_SEEDS);
+    </script>
+</body>
+
+</html>

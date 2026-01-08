@@ -499,6 +499,159 @@ a:hover {
     }
 }
 
+/* Game Rules & Disclaimer Styles */
+.rules-section,
+.disclaimer-section {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg-medium);
+    border: 1px solid var(--color-border);
+    text-align: left;
+}
+
+.rules-list {
+    list-style: none;
+    counter-reset: rules-counter;
+}
+
+.rule-item {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+    position: relative;
+    font-size: 1.1rem;
+}
+
+.rule-item::before {
+    counter-increment: rules-counter;
+    content: counter(rules-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    background-color: var(--color-accent-amber);
+    color: var(--color-bg-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: bold;
+    border-radius: 2px;
+}
+
+.disclaimer-text {
+    font-style: italic;
+    color: var(--color-text-secondary);
+    border-left: 4px solid var(--color-accent-red);
+    padding-left: var(--spacing-md);
+}
+
+/* Review / Feedback Box Styles */
+.footer-review-section {
+    margin-top: var(--spacing-xxl);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    background-color: var(--color-bg-medium);
+    border-top: 2px solid var(--color-border);
+}
+
+.review-form {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.review-form .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.review-btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: var(--spacing-sm);
+}
+
+/* Catalog Card Styles */
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.mystery-card {
+    background-color: var(--color-bg-medium);
+    border: 1px solid var(--color-border);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-speed);
+    display: flex;
+    flex-direction: column;
+}
+
+.mystery-card:hover {
+    border-color: var(--color-accent-cyan);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 25px rgba(0, 212, 255, 0.2);
+}
+
+.mystery-category {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    color: var(--color-accent-amber);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.mystery-title {
+    font-size: 1.4rem;
+    margin-bottom: var(--spacing-sm);
+    flex-grow: 1;
+}
+
+.mystery-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-border);
+}
+
+/* Voting UI */
+.vote-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.vote-btn {
+    background: none;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    padding: 2px 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.vote-btn:hover {
+    border-color: var(--color-accent-amber);
+    color: var(--color-accent-amber);
+}
+
+.vote-btn.active {
+    background-color: var(--color-accent-amber);
+    color: var(--color-bg-dark);
+}
+
+.vote-count {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--color-accent-amber);
+}
+
 /* Animations */
 @keyframes fadeIn {
     from {

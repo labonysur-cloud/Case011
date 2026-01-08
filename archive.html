@@ -99,6 +99,18 @@
         </section>
     </main>
 
+    <footer class="footer-review-section">
+        <div class="landing-footer" style="margin-top: 0;">
+            <nav class="footer-nav">
+                <a href="index.html" class="footer-link">Home</a>
+                <a href="mysteries.html" class="footer-link">Case Catalog</a>
+                <a href="index.html#rules" class="footer-link">Rules</a>
+                <a href="index.html#disclaimer" class="footer-link">Disclaimer</a>
+            </nav>
+            <p class="footer-text">CASE011 - Archives of the Unexplained</p>
+        </div>
+    </footer>
+
     <!-- Modal for viewing full investigation -->
     <div class="modal" id="investigationModal" style="display: none;">
         <div class="modal-content">
@@ -233,8 +245,14 @@
                         <span class="meta-item">${submission.wordCount} words</span>
                         <span class="meta-item">${formatDate(new Date(submission.submittedAt))}</span>
                     </div>
-                    <button class="view-btn" data-id="${submission.caseHash}-${submission.submittedAt}">
-                        View Full Investigation &#8599;
+                    <div class="vote-container">
+                        <button class="vote-btn" data-id="${submission.id}">
+                            &#9650; VOTE
+                        </button>
+                        <span class="vote-count" id="vote-count-${submission.id.replace(/\W/g, '')}">${submission.votes || 0}</span>
+                    </div>
+                    <button class="view-btn" data-id="${submission.id}">
+                        Study Investigation &#8599;
                     </button>
                 `;
                 grid.appendChild(card);
@@ -244,8 +262,21 @@
             document.querySelectorAll('.view-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const id = e.target.dataset.id;
-                    const submission = submissions.find(s => `${s.caseHash}-${s.submittedAt}` === id);
+                    const submission = submissions.find(s => s.id === id);
                     showInvestigationModal(submission);
+                });
+            });
+
+            // Add vote handlers
+            document.querySelectorAll('.vote-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.target.dataset.id;
+                    if (voteSubmission(id)) {
+                        const countSpan = document.getElementById(`vote-count-${id.replace(/\W/g, '')}`);
+                        countSpan.textContent = parseInt(countSpan.textContent) + 1;
+                        btn.classList.add('active');
+                        btn.disabled = true;
+                    }
                 });
             });
         }

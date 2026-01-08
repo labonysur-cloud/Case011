@@ -18,7 +18,8 @@ function saveSubmission(submission) {
         const submissionWithId = {
             ...submission,
             id: `${submission.caseHash}-${Date.now()}`,
-            submittedAt: submission.submittedAt || new Date().toISOString()
+            submittedAt: submission.submittedAt || new Date().toISOString(),
+            votes: 0
         };
 
         submissions.push(submissionWithId);
@@ -225,4 +226,25 @@ function getSubmissionCount(caseHash) {
 function hasSubmitted(caseHash, investigatorName) {
     const submissions = getSubmissionsByCase(caseHash);
     return submissions.some(s => s.investigatorName === investigatorName);
+}
+/**
+ * Vote for a submission
+ * @param {string} id - Submission ID
+ * @returns {boolean} Success status
+ */
+function voteSubmission(id) {
+    try {
+        const submissions = getSubmissions();
+        const index = submissions.findIndex(s => s.id === id);
+
+        if (index !== -1) {
+            submissions[index].votes = (submissions[index].votes || 0) + 1;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(submissions));
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.error('Failed to vote:', error);
+        return false;
+    }
 }
