@@ -87,9 +87,12 @@
                     </p>
                     <div class="mystery-meta">
                         <span>Difficulty: ${item.difficulty.toUpperCase()}</span>
-                        <a href="case.html?hash=${item.id}&ai=true" class="investigate-link" style="color: var(--color-accent-amber); font-weight: bold;">
-                            INVESTIGATE &#8594;
-                        </a>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            ${item.wikipedia ? `<a href="${item.wikipedia}" target="_blank" class="wiki-link" title="Wikipedia Article" style="color: var(--color-text-muted); font-size: 0.9rem;">[W]</a>` : ''}
+                            <a href="case.html?hash=${item.id}&ai=true" class="investigate-link" style="color: var(--color-accent-amber); font-weight: bold;">
+                                INVESTIGATE &#8594;
+                            </a>
+                        </div>
                     </div>
                 `;
                 grid.appendChild(card);

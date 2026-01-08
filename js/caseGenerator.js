@@ -15,6 +15,7 @@ const CASE_SEEDS = [
             <p>Despite decades of analysis by the world's best cryptographers, linguists, and historians, no one has successfully deciphered the manuscript's contents. The text follows statistical patterns similar to natural languages, yet matches no known linguistic system.</p>
             <p>Your mission: Investigate the available evidence, analyze the patterns, and develop a theory about the manuscript's origin and purpose.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Voynich_manuscript',
         artifacts: [
             {
                 type: 'article',
@@ -52,6 +53,7 @@ const CASE_SEEDS = [
             <p>The tent was cut open from the inside. Some victims had severe internal trauma with no external wounds. Traces of radiation were detected on some clothing. The official investigation concluded "unknown compelling force" caused the deaths.</p>
             <p>Your mission: Examine the evidence, autopsy reports, and environmental factors to develop a coherent explanation for what happened that night.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Dyatlov_Pass_incident',
         artifacts: [
             {
                 type: 'article',
@@ -83,6 +85,7 @@ const CASE_SEEDS = [
             <p>The book was later found with an indecipherable code written on its back page. Despite extensive investigation, the man's identity, cause of death, and the meaning of the code remain unknown.</p>
             <p>Your mission: Analyze the cryptographic evidence, investigate the historical context, and propose theories about the unknown man's identity and fate.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Tamam_Shud_case',
         artifacts: [
             {
                 type: 'article',
@@ -114,6 +117,7 @@ const CASE_SEEDS = [
             <p>Despite one of the most extensive manhunts in FBI history, Cooper's identity and fate remain unknown. In 1980, a small portion of the ransom money was found along the Columbia River, but no other trace of Cooper or the money has ever been discovered.</p>
             <p>Your mission: Investigate the evidence, analyze the flight path and weather conditions, and develop theories about Cooper's identity and whether he survived the jump.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/D._B._Cooper',
         artifacts: [
             {
                 type: 'article',
@@ -145,6 +149,7 @@ const CASE_SEEDS = [
             <p>The Z340 cipher was finally cracked in 2020, but the Z13 and Z32 ciphers continue to puzzle cryptographers. The killer's identity remains unknown.</p>
             <p>Your mission: Study the solved ciphers, analyze the unsolved codes, and investigate the patterns that might reveal the killer's identity or methods.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Zodiac_Killer',
         artifacts: [
             {
                 type: 'article',
@@ -176,6 +181,7 @@ const CASE_SEEDS = [
             <p>The device could predict eclipses, track the Olympic Games cycle, and model the irregular orbit of the Moon. Its existence suggests a level of ancient Greek technological sophistication that was lost for over a millennium.</p>
             <p>Your mission: Investigate how such advanced technology could exist in ancient times and what happened to this knowledge.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Antikythera_mechanism',
         artifacts: [
             {
                 type: 'article',
@@ -207,6 +213,7 @@ const CASE_SEEDS = [
             <p>Despite over 200 years of excavation attempts, no treasure has been recovered. The pit features sophisticated flood tunnels that fill the shaft with seawater when disturbed. Six people have died searching for the treasure.</p>
             <p>Your mission: Analyze the engineering evidence, historical records, and theories about what might be buried and who created this elaborate structure.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Oak_Island_mystery',
         artifacts: [
             {
                 type: 'article',
@@ -238,6 +245,7 @@ const CASE_SEEDS = [
             <p>Only one cipher (describing the treasure's contents) has been decoded using the Declaration of Independence as a key. The other two, revealing the location and the rightful heirs, remain unsolved. Many suspect the entire story is an elaborate hoax.</p>
             <p>Your mission: Analyze the ciphers, investigate the historical evidence for Beale's existence, and determine if the treasure is real or a 19th-century puzzle.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Beale_ciphers',
         artifacts: [
             {
                 type: 'article',
@@ -269,6 +277,7 @@ const CASE_SEEDS = [
             <p>No trace of the colonists was ever found. Theories range from integration with local tribes to Spanish attack, disease, or starvation. Recent archaeological evidence suggests some colonists may have survived and dispersed.</p>
             <p>Your mission: Examine historical records, archaeological findings, and Native American oral histories to determine what happened to the Lost Colony.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Roanoke_Colony',
         artifacts: [
             {
                 type: 'article',
@@ -300,6 +309,7 @@ const CASE_SEEDS = [
             <p>Witnesses reported a bright light and intense heat. Seismic stations across Europe recorded the shock. The most accepted theory is an airburst from a meteor or comet, but the lack of debris remains puzzling.</p>
             <p>Your mission: Analyze eyewitness accounts, scientific data, and expedition reports to determine what caused the Tunguska explosion.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Tunguska_event',
         artifacts: [
             {
                 type: 'article',
@@ -331,6 +341,7 @@ const CASE_SEEDS = [
             <p>Over the decades, dozens of vessels and aircraft have disappeared without a trace in this area. While many attribute these incidents to natural phenomena like methane hydrates, rogue waves, or magnetic anomalies, no single explanation accounts for all cases.</p>
             <p>Your mission: Investigate the documented disappearances, analyze environmental factors, and determine whether the Bermuda Triangle represents a genuine anomaly or statistical coincidence.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Bermuda_Triangle',
         artifacts: [
             {
                 type: 'article',
@@ -362,6 +373,7 @@ const CASE_SEEDS = [
             <p>Satellite data suggests the plane deviated from its planned route and flew for hours after losing contact. Some debris confirmed to be from MH370 has washed up on shores across the Indian Ocean, but the aircraft's final location and the cause of the disappearance remain unknown.</p>
             <p>Your mission: Analyze the available evidence, satellite data, and debris findings to develop theories about what happened to MH370 and where it might be located.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Malaysia_Airlines_Flight_370',
         artifacts: [
             {
                 type: 'article',
@@ -393,6 +405,7 @@ const CASE_SEEDS = [
             <p>The purpose of these lines remains debated. Theories range from astronomical calendars to religious pathways, irrigation systems, or even alien landing sites. The precision and scale of the lines, created by removing the reddish pebble layer to reveal lighter ground beneath, is remarkable.</p>
             <p>Your mission: Investigate the archaeological evidence, astronomical alignments, and cultural context to determine why the Nazca people created these enormous desert drawings.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Nazca_Lines',
         artifacts: [
             {
                 type: 'article',
@@ -424,6 +437,7 @@ const CASE_SEEDS = [
             <p>The monument's purpose is equally puzzling. Theories include an astronomical observatory, healing temple, burial site, or ceremonial center. Recent discoveries suggest it may have been part of a larger sacred landscape with multiple functions.</p>
             <p>Your mission: Examine archaeological evidence, astronomical alignments, and experimental archaeology to understand how and why Stonehenge was built.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Stonehenge',
         artifacts: [
             {
                 type: 'article',
@@ -455,6 +469,7 @@ const CASE_SEEDS = [
             <p>The signal bore the expected hallmarks of an extraterrestrial transmission: it was at the hydrogen line frequency (1420 MHz), where natural transmissions are forbidden by international agreement. Despite numerous attempts, the signal has never been detected again.</p>
             <p>Your mission: Analyze the signal data, investigate natural and artificial explanations, and determine whether the Wow Signal could represent evidence of extraterrestrial intelligence.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Wow!_signal',
         artifacts: [
             {
                 type: 'article',
@@ -486,6 +501,7 @@ const CASE_SEEDS = [
             <p>The last log entry was dated nine days earlier. Personal belongings, including valuable items, were left behind. The ship's papers were missing except for the captain's logbook. No signs of struggle, piracy, or violence were found.</p>
             <p>Your mission: Investigate the evidence, weather conditions, and crew backgrounds to determine what caused the entire crew to abandon a perfectly seaworthy ship.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Mary_Celeste',
         artifacts: [
             {
                 type: 'article',
@@ -517,6 +533,7 @@ const CASE_SEEDS = [
             <p>Only a handful of people reportedly solved the puzzle, and those who did were allegedly recruited for an unknown purpose. Similar puzzles appeared in 2013 and 2014. The identity and purpose of Cicada 3301 remain unknown, with theories ranging from intelligence agency recruitment to an elaborate art project.</p>
             <p>Your mission: Analyze the puzzle structure, investigate the clues and solutions, and develop theories about who created Cicada 3301 and why.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Cicada_3301',
         artifacts: [
             {
                 type: 'article',
@@ -548,6 +565,7 @@ const CASE_SEEDS = [
             <p>Radiocarbon dating in 1988 suggested the shroud dates from the 13th-14th century, but critics argue the sample was contaminated or taken from a medieval repair. The image formation process remains unexplained - it's not paint, dye, or any known artistic technique.</p>
             <p>Your mission: Examine the scientific evidence, historical records, and image analysis to determine the shroud's age, authenticity, and how the image was created.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Shroud_of_Turin',
         artifacts: [
             {
                 type: 'article',
@@ -579,6 +597,7 @@ const CASE_SEEDS = [
             <p>The case attracted massive media attention, with Short posthumously nicknamed the "Black Dahlia" by newspapers. Over 60 people confessed to the murder, but none were credible. The case remains one of the most famous unsolved murders in American history.</p>
             <p>Your mission: Examine the evidence, investigate suspects, and analyze the investigation to develop theories about who killed Elizabeth Short and why.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Black_Dahlia',
         artifacts: [
             {
                 type: 'article',
@@ -610,6 +629,7 @@ const CASE_SEEDS = [
             <p>The sculpture was commissioned by the CIA as a challenge to its employees. Even the NSA and top cryptographers worldwide have failed to crack the final section. Sanborn has released several clues over the years, but the message remains a mystery.</p>
             <p>Your mission: Study the solved sections, analyze Sanborn's clues, and attempt to crack the final encrypted message of Kryptos.</p>
         `,
+        wikipedia: 'https://en.wikipedia.org/wiki/Kryptos',
         artifacts: [
             {
                 type: 'article',
@@ -652,6 +672,7 @@ function generateCase(hash) {
         category: caseData.category,
         difficulty: caseData.difficulty,
         briefing: caseData.briefing,
+        wikipedia: caseData.wikipedia,
         artifacts: shuffledArtifacts.slice(0, Math.min(4, shuffledArtifacts.length))
     };
 }

@@ -139,7 +139,7 @@ The truth is in the details."></textarea>
 
                 if (useAI) {
                     // Show generic loading indicator (don't mention AI)
-                    document.getElementById('briefingText').innerHTML = '<p style="color: var(--color-accent-cyan);">Loading case details... This may take a moment.</p>';
+                    document.getElementById('caseBriefing').innerHTML = '<p style="color: var(--color-accent-cyan);">Loading case details... This may take a moment.</p>';
 
                     try {
                         caseData = await generateCaseWithAI(caseHash, true);
@@ -157,7 +157,16 @@ The truth is in the details."></textarea>
                 document.getElementById('caseCategory').textContent = caseData.category.toUpperCase();
                 document.getElementById('caseDifficulty').textContent = caseData.difficulty.toUpperCase();
                 document.getElementById('dateOpened').textContent = formatDate(new Date());
-                document.getElementById('briefingText').innerHTML = caseData.briefing;
+                document.getElementById('caseBriefing').innerHTML = caseData.briefing;
+
+                // Wikipedia Link
+                if (caseData.wikipedia) {
+                    document.getElementById('wikiLinkContainer').innerHTML = `
+                        <a href="${caseData.wikipedia}" target="_blank" class="primary-btn" style="background: transparent; border: 1px solid var(--color-accent-amber); color: var(--color-accent-amber); font-size: 0.9rem; padding: 0.5rem 1rem;">
+                            &#128214; RESEARCH ON WIKIPEDIA
+                        </a>
+                    `;
+                }
 
                 // Load artifacts
                 const artifactsGrid = document.getElementById('artifactsGrid');
