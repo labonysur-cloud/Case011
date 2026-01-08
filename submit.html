@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Investigation - Case011</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Special+Elite&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="submit-page">
+    <div class="grain-overlay"></div>
+
+    <header class="case-header">
+        <div class="header-content">
+            <a href="index.html" class="back-link">&#8592; Back to Home</a>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="assets/logo.png" alt="Logo" class="header-logo">
+                <h1 class="case-title">SUBMIT INVESTIGATION</h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="submit-container">
+        <div class="submit-layout">
+            <section class="review-section">
+                <h2 class="section-title">CASE SUMMARY</h2>
+                <div class="case-summary-card">
+                    <div class="summary-row">
+                        <span class="summary-label">Case Hash:</span>
+                        <span class="summary-value" id="summaryHash"></span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Case Name:</span>
+                        <span class="summary-value" id="summaryName"></span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Investigation Date:</span>
+                        <span class="summary-value" id="summaryDate"></span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Notes Length:</span>
+                        <span class="summary-value" id="summaryLength"></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="investigator-section">
+                <h2 class="section-title">INVESTIGATOR DETAILS</h2>
+                <div class="form-group">
+                    <label for="investigatorName" class="form-label">Investigator Name (Optional)</label>
+                    <input type="text" id="investigatorName" class="form-input" placeholder="Anonymous Investigator"
+                        maxlength="50">
+                </div>
+            </section>
+
+            <section class="conclusion-section">
+                <h2 class="section-title">FINAL CONCLUSION</h2>
+                <p class="section-desc">Summarize your theory and findings in 2-3 sentences.</p>
+                <textarea id="conclusionText" class="conclusion-textarea"
+                    placeholder="Based on my investigation, I conclude that..." maxlength="500"></textarea>
+                <div class="char-counter">
+                    <span id="conclusionCount">0</span> / 500 characters
+                </div>
+            </section>
+
+            <section class="notebook-preview-section">
+                <h2 class="section-title">INVESTIGATION NOTES PREVIEW</h2>
+                <div class="notebook-preview" id="notebookPreview">
+                    <!-- Notebook content will be loaded here -->
+                </div>
+            </section>
+
+            <section class="submit-actions">
+                <button class="primary-btn submit-final-btn" id="submitFinalBtn">
+                    <span class="btn-icon">&#10004;</span>
+                    <span class="btn-text">SUBMIT TO ARCHIVE</span>
+                </button>
+                <p class="submit-disclaimer">
+                    By submitting, you agree to share your investigation with the Case011 community.
+                    Your submission will be publicly visible in the archive.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/utils.js"></script>
+    <script src="js/caseGenerator.js"></script>
+    <script src="js/storage.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const caseHash = urlParams.get('hash');
+
+        if (!caseHash) {
+            window.location.href = 'index.html';
+        } else {
+            // Back link
+            document.getElementById('backLink').href = `case.html?hash=${caseHash}`;
+
+            // Load case data
+            const caseData = generateCase(caseHash);
+            const notebook = localStorage.getItem(`case_notebook_${caseHash}`) || '';
+
+            // Populate summary
+            document.getElementById('summaryHash').textContent = `#${caseHash}`;
+            document.getElementById('summaryName').textContent = caseData.title;
+            document.getElementById('summaryDate').textContent = formatDate(new Date());
+            document.getElementById('summaryLength').textContent = `${notebook.split(/\s+/).filter(w => w.length > 0).length} words`;
+
+            // Show notebook preview
+            document.getElementById('notebookPreview').textContent = notebook || 'No notes found.';
+
+            // Conclusion character counter
+            const conclusionText = document.getElementById('conclusionText');
+            const conclusionCount = document.getElementById('conclusionCount');
+
+            conclusionText.addEventListener('input', () => {
+                conclusionCount.textContent = conclusionText.value.length;
+            });
+
+            // Submit button
+            document.getElementById('submitFinalBtn').addEventListener('click', () => {
+                const investigatorName = document.getElementById('investigatorName').value.trim() || 'Anonymous Investigator';
+                const conclusion = conclusionText.value.trim();
+
+                if (conclusion.length < 50) {
+                    alert('Please write at least 50 characters for your conclusion.');
+                    return;
+                }
+
+                // Create submission object
+                const submission = {
+                    caseHash: caseHash,
+                    caseName: caseData.title,
+                    caseCategory: caseData.category,
+                    investigatorName: investigatorName,
+                    conclusion: conclusion,
+                    notebook: notebook,
+                    submittedAt: new Date().toISOString(),
+                    wordCount: notebook.split(/\s+/).filter(w => w.length > 0).length
+                };
+
+                // Save to archive
+                saveSubmission(submission);
+
+                // Show success and redirect
+                alert('Investigation submitted successfully! Redirecting to archive...');
+                setTimeout(() => {
+                    window.location.href = 'archive.html';
+                }, 1000);
+            });
+        }
+    </script>
+</body>
+
+</html>

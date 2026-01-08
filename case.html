@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Investigation - Case011</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Special+Elite&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="case-page">
+    <div class="grain-overlay"></div>
+
+    <header class="case-header">
+        <div class="header-content">
+            <a href="index.html" class="back-link">&#8592; Back to Home</a>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="assets/logo.png" alt="Logo" class="header-logo">
+                <h1 class="case-title">CASE011</h1>
+            </div>
+            <div class="case-meta">
+                <span class="case-hash" id="caseHashDisplay"></span>
+                <button class="share-btn" id="shareBtn" title="Share this case">&#10697;</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="case-container">
+        <div class="case-layout">
+            <!-- Case Briefing Section -->
+            <section class="case-briefing">
+                <div class="section-header">
+                    <h2 class="section-title">CASE BRIEFING</h2>
+                    <span class="classification-label">CLASSIFIED</span>
+                </div>
+                <div class="briefing-content">
+                    <h3 class="case-name" id="caseName">Loading...</h3>
+                    <div class="case-details">
+                        <span class="detail-item">Category: <strong id="caseCategory"></strong></span>
+                        <span class="detail-item">Difficulty: <strong id="caseDifficulty"></strong></span>
+                        <span class="detail-item">Date Opened: <strong id="dateOpened"></strong></span>
+                    </div>
+                    <div class="briefing-text" id="briefingText">
+                        <p>Loading case details...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Artifacts Section -->
+            <section class="artifacts-section">
+                <div class="section-header">
+                    <h2 class="section-title">EVIDENCE & ARTIFACTS</h2>
+                    <span class="artifact-count" id="artifactCount">0 items</span>
+                </div>
+                <div class="artifacts-grid" id="artifactsGrid">
+                    <!-- Artifacts will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Notebook Section -->
+            <section class="notebook-section">
+                <div class="section-header">
+                    <h2 class="section-title">INVESTIGATION NOTEBOOK</h2>
+                    <div class="notebook-controls">
+                        <button class="icon-btn" id="timestampBtn" title="Insert timestamp">&#128337;</button>
+                        <button class="icon-btn" id="clearBtn" title="Clear notebook">&#128465;</button>
+                        <span class="save-indicator" id="saveIndicator">Auto-saved</span>
+                    </div>
+                </div>
+                <div class="notebook-container">
+                    <textarea class="notebook-textarea" id="notebookArea" placeholder="Begin your investigation notes here...
+
+Document your findings, theories, and observations.
+Reference artifacts by number.
+Build your case step by step.
+
+The truth is in the details."></textarea>
+                    <div class="notebook-stats">
+                        <span id="wordCount">0 words</span>
+                        <span id="charCount">0 characters</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Submit Section -->
+            <section class="submit-section">
+                <button type="button" class="primary-btn submit-btn" id="submitBtn">
+                    <span class="btn-icon">&#10004;</span>
+                    <span class="btn-text">SUBMIT INVESTIGATION</span>
+                </button>
+                <p class="submit-note">Your investigation will be added to the community archive</p>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/utils.js"></script>
+    <script src="js/caseGenerator.js"></script>
+    <script src="js/aiGenerator.js"></script>
+    <script src="js/notebook.js"></script>
+    <script>
+        // Initialize case page
+        const urlParams = new URLSearchParams(window.location.search);
+        const caseHash = urlParams.get('hash');
+        const useAI = urlParams.get('ai') === 'true'; // Check if AI mode is enabled
+
+        if (!caseHash) {
+            console.error('No case hash provided. Redirecting...');
+            document.body.innerHTML = '<div style="color: var(--color-text); padding: 2rem; font-family: var(--font-display); text-align: center;"><h2>Error: No Case Hash Provided</h2><p>Returning to home page...</p></div>';
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        } else {
+            // Display case hash
+            document.getElementById('caseHashDisplay').textContent = `#${caseHash}`;
+
+            // Load case data (with AI if enabled)
+            async function loadCase() {
+                let caseData;
+
+                if (useAI) {
+                    // Show generic loading indicator (don't mention AI)
+                    document.getElementById('briefingText').innerHTML = '<p style="color: var(--color-accent-cyan);">Loading case details... This may take a moment.</p>';
+
+                    try {
+                        caseData = await generateCaseWithAI(caseHash, true);
+                        // Don't show AI indicator - keep it invisible
+                    } catch (error) {
+                        console.error('AI generation failed:', error);
+                        caseData = generateCase(caseHash);
+                    }
+                } else {
+                    caseData = generateCase(caseHash);
+                }
+
+                // Populate case details
+                document.getElementById('caseName').textContent = caseData.title;
+                document.getElementById('caseCategory').textContent = caseData.category.toUpperCase();
+                document.getElementById('caseDifficulty').textContent = caseData.difficulty.toUpperCase();
+                document.getElementById('dateOpened').textContent = formatDate(new Date());
+                document.getElementById('briefingText').innerHTML = caseData.briefing;
+
+                // Load artifacts
+                const artifactsGrid = document.getElementById('artifactsGrid');
+                document.getElementById('artifactCount').textContent = `${caseData.artifacts.length} items`;
+
+                caseData.artifacts.forEach((artifact, index) => {
+                    const artifactCard = document.createElement('div');
+                    artifactCard.className = 'artifact-card';
+                    artifactCard.innerHTML = `
+                        <div class="artifact-header">
+                            <span class="artifact-number">ARTIFACT ${String(index + 1).padStart(2, '0')}</span>
+                            <span class="artifact-type">${artifact.type.toUpperCase()}</span>
+                        </div>
+                        <h4 class="artifact-title">${artifact.title}</h4>
+                        <p class="artifact-desc">${artifact.description || ''}</p>
+                        <a href="${artifact.url}" target="_blank" class="artifact-link" rel="noopener noreferrer">
+                            View Evidence &#8599;
+                        </a>
+                    `;
+                    artifactsGrid.appendChild(artifactCard);
+                });
+            }
+
+            // Load the case
+            loadCase();
+
+            // Initialize notebook
+            initNotebook(caseHash);
+
+            // Share button
+            document.getElementById('shareBtn').addEventListener('click', () => {
+                const shareUrl = window.location.href;
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert('Case link copied to clipboard!');
+                });
+            });
+
+            // Submit button
+            document.getElementById('submitBtn').addEventListener('click', () => {
+                const notebook = document.getElementById('notebookArea').value;
+                if (notebook.trim().length < 100) {
+                    alert('Please write at least 100 characters in your investigation notes before submitting.');
+                    return;
+                }
+                window.location.href = `submit.html?hash=${caseHash}`;
+            });
+        }
+    </script>
+</body>
+
+</html>

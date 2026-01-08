@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Archive - Case011</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Special+Elite&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="archive-page">
+    <div class="grain-overlay"></div>
+
+    <header class="case-header">
+        <div class="header-content">
+            <a href="index.html" class="back-link">&#8592; Back to Home</a>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="assets/logo.png" alt="Logo" class="header-logo">
+                <h1 class="case-title">COMMUNITY ARCHIVE</h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="archive-container">
+        <section class="archive-header-section">
+            <p class="archive-desc">
+                Browse investigations submitted by fellow investigators. Each case can be reopened and re-investigated
+                from a new perspective.
+            </p>
+            <div class="archive-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalSubmissions">0</span>
+                    <span class="stat-label">Total Investigations</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalInvestigators">0</span>
+                    <span class="stat-label">Investigators</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalCases">0</span>
+                    <span class="stat-label">Unique Cases</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="filter-section">
+            <div class="filter-controls">
+                <select id="categoryFilter" class="filter-select">
+                    <option value="all">All Categories</option>
+                    <option value="cryptographic">Cryptographic</option>
+                    <option value="historical">Historical</option>
+                    <option value="archaeological">Archaeological</option>
+                    <option value="scientific">Scientific</option>
+                    <option value="disappearance">Disappearance</option>
+                </select>
+                <select id="sortFilter" class="filter-select">
+                    <option value="recent">Most Recent</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="longest">Longest Notes</option>
+                </select>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search investigations...">
+            </div>
+
+            <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                <button class="icon-btn" id="exportBtn" title="Export Archive"
+                    style="padding: 8px 16px; font-family: var(--font-display); font-size: 0.9rem;">
+                    &#8595; EXPORT ARCHIVE
+                </button>
+                <button class="icon-btn" id="importBtn" title="Import Archive"
+                    style="padding: 8px 16px; font-family: var(--font-display); font-size: 0.9rem;">
+                    &#8593; IMPORT ARCHIVE
+                </button>
+                <button class="icon-btn" id="syncBtn" title="Sync with Shared Archive"
+                    style="padding: 8px 16px; font-family: var(--font-display); font-size: 0.9rem;">
+                    &#8634; SYNC
+                </button>
+            </div>
+            <input type="file" id="importFileInput" accept=".json" style="display: none;">
+        </section>
+
+        <section class="submissions-section">
+            <div class="submissions-grid" id="submissionsGrid">
+                <!-- Submissions will be loaded here -->
+            </div>
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <p class="empty-text">No investigations found.</p>
+                <p class="empty-subtext">Be the first to submit an investigation!</p>
+                <a href="index.html" class="primary-btn">
+                    <span class="btn-text">START INVESTIGATING</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for viewing full investigation -->
+    <div class="modal" id="investigationModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Investigation details will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="primary-btn reopen-btn" id="reopenBtn">
+                    <span class="btn-icon">&#8634;</span>
+                    <span class="btn-text">REOPEN CASE</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/caseGenerator.js"></script>
+    <script src="js/aiGenerator.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/sharedArchive.js"></script>
+    <script>
+        let allSubmissions = [];
+        let currentSubmission = null;
+
+        // Load submissions
+        async function loadSubmissions() {
+            // Try to load from shared archive first
+            try {
+                const combined = await getCombinedArchive();
+                allSubmissions = combined.all;
+
+                // Show sync status
+                if (combined.stats.shared > 0) {
+                    console.log(`Loaded ${combined.stats.shared} shared submissions`);
+                }
+            } catch (error) {
+                // Fallback to local only
+                allSubmissions = getSubmissions();
+            }
+
+            updateStats();
+            displaySubmissions(allSubmissions);
+        }
+
+        // Export archive button
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            downloadArchive();
+            alert('Archive exported successfully!');
+        });
+
+        // Import archive button
+        document.getElementById('importBtn').addEventListener('click', () => {
+            document.getElementById('importFileInput').click();
+        });
+
+        document.getElementById('importFileInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const success = await importArchiveFromFile(file);
+                if (success) {
+                    alert('Archive imported successfully!');
+                    loadSubmissions();
+                } else {
+                    alert('Failed to import archive. Please check the file format.');
+                }
+                e.target.value = ''; // Reset input
+            }
+        });
+
+        // Sync button
+        document.getElementById('syncBtn').addEventListener('click', async () => {
+            const syncBtn = document.getElementById('syncBtn');
+            syncBtn.textContent = '⟳ SYNCING...';
+            syncBtn.disabled = true;
+
+            const result = await syncArchive();
+
+            if (result.success) {
+                alert(`Sync complete! Added ${result.newSubmissions} new submissions.`);
+                loadSubmissions();
+            } else {
+                alert('Sync failed. Using local archive only.');
+            }
+
+            syncBtn.textContent = '↻ SYNC';
+            syncBtn.disabled = false;
+        });
+
+
+        // Update statistics
+        function updateStats() {
+            document.getElementById('totalSubmissions').textContent = allSubmissions.length;
+
+            const uniqueInvestigators = new Set(allSubmissions.map(s => s.investigatorName)).size;
+            document.getElementById('totalInvestigators').textContent = uniqueInvestigators;
+
+            const uniqueCases = new Set(allSubmissions.map(s => s.caseHash)).size;
+            document.getElementById('totalCases').textContent = uniqueCases;
+        }
+
+        // Display submissions
+        function displaySubmissions(submissions) {
+            const grid = document.getElementById('submissionsGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            if (submissions.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+            grid.innerHTML = '';
+
+            submissions.forEach(submission => {
+                const card = document.createElement('div');
+                card.className = 'submission-card';
+                card.innerHTML = `
+                    <div class="submission-header">
+                        <span class="submission-hash">#${submission.caseHash}</span>
+                        <span class="submission-category">${submission.caseCategory.toUpperCase()}</span>
+                    </div>
+                    <h3 class="submission-title">${submission.caseName}</h3>
+                    <p class="submission-investigator">By ${submission.investigatorName}</p>
+                    <p class="submission-conclusion">${truncateText(submission.conclusion, 120)}</p>
+                    <div class="submission-meta">
+                        <span class="meta-item">${submission.wordCount} words</span>
+                        <span class="meta-item">${formatDate(new Date(submission.submittedAt))}</span>
+                    </div>
+                    <button class="view-btn" data-id="${submission.caseHash}-${submission.submittedAt}">
+                        View Full Investigation &#8599;
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Add click handlers
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.target.dataset.id;
+                    const submission = submissions.find(s => `${s.caseHash}-${s.submittedAt}` === id);
+                    showInvestigationModal(submission);
+                });
+            });
+        }
+
+        // Show investigation modal
+        function showInvestigationModal(submission) {
+            currentSubmission = submission;
+            const modal = document.getElementById('investigationModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+
+            modalTitle.textContent = submission.caseName;
+            modalBody.innerHTML = `
+                <div class="modal-section">
+                    <h4 class="modal-section-title">Case Details</h4>
+                    <div class="modal-detail-grid">
+                        <div class="modal-detail">
+                            <span class="detail-label">Case Hash:</span>
+                            <span class="detail-value">#${submission.caseHash}</span>
+                        </div>
+                        <div class="modal-detail">
+                            <span class="detail-label">Category:</span>
+                            <span class="detail-value">${submission.caseCategory.toUpperCase()}</span>
+                        </div>
+                        <div class="modal-detail">
+                            <span class="detail-label">Investigator:</span>
+                            <span class="detail-value">${submission.investigatorName}</span>
+                        </div>
+                        <div class="modal-detail">
+                            <span class="detail-label">Submitted:</span>
+                            <span class="detail-value">${formatDate(new Date(submission.submittedAt))}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-section">
+                    <h4 class="modal-section-title">Conclusion</h4>
+                    <p class="modal-conclusion">${submission.conclusion}</p>
+                </div>
+                <div class="modal-section">
+                    <h4 class="modal-section-title">Investigation Notes</h4>
+                    <pre class="modal-notebook">${submission.notebook}</pre>
+                </div>
+            `;
+
+            modal.style.display = 'flex';
+        }
+
+        // Close modal
+        document.getElementById('modalClose').addEventListener('click', () => {
+            document.getElementById('investigationModal').style.display = 'none';
+        });
+
+        // Reopen case - AI works automatically in background
+        document.getElementById('reopenBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentSubmission) {
+                // Always use AI mode but don't tell the user
+                window.location.href = `case.html?hash=${currentSubmission.caseHash}&ai=true`;
+            }
+        });
+
+        // Filter and search
+        document.getElementById('categoryFilter').addEventListener('change', filterSubmissions);
+        document.getElementById('sortFilter').addEventListener('change', filterSubmissions);
+        document.getElementById('searchInput').addEventListener('input', filterSubmissions);
+
+        function filterSubmissions() {
+            const category = document.getElementById('categoryFilter').value;
+            const sort = document.getElementById('sortFilter').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+
+            let filtered = [...allSubmissions];
+
+            // Filter by category
+            if (category !== 'all') {
+                filtered = filtered.filter(s => s.caseCategory === category);
+            }
+
+            // Filter by search
+            if (search) {
+                filtered = filtered.filter(s =>
+                    s.caseName.toLowerCase().includes(search) ||
+                    s.investigatorName.toLowerCase().includes(search) ||
+                    s.conclusion.toLowerCase().includes(search)
+                );
+            }
+
+            // Sort
+            if (sort === 'recent') {
+                filtered.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+            } else if (sort === 'oldest') {
+                filtered.sort((a, b) => new Date(a.submittedAt) - new Date(b.submittedAt));
+            } else if (sort === 'longest') {
+                filtered.sort((a, b) => b.wordCount - a.wordCount);
+            }
+
+            displaySubmissions(filtered);
+        }
+
+        // Initialize
+        loadSubmissions();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+.gemini/
+.system_generated/
+node_modules/
+dist/
+.env
+*.log

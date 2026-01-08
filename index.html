@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case011 - Each case is real. Each trail is incomplete.</title>
+    <meta name="description"
+        content="Real-world mystery investigation platform. Each case is real. Each trail is incomplete.">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Special+Elite&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="landing-page">
+    <div class="grain-overlay"></div>
+
+    <main class="landing-container">
+        <div class="case-stamp">
+            <div class="stamp-text">CLASSIFIED</div>
+        </div>
+
+        <header class="landing-header">
+            <img src="assets/logo.png" alt="Case011" class="site-logo">
+            <h1 class="site-title">CASE011</h1>
+            <p class="site-tagline">Each case is real. Each trail is incomplete.</p>
+        </header>
+
+        <section class="intro-section">
+            <div class="typewriter-container">
+                <p class="typewriter-text" id="introText"></p>
+            </div>
+        </section>
+
+        <section class="action-section">
+            <button type="button" class="primary-btn open-case-btn" id="openCaseBtn">
+                <span class="btn-icon">&#9998;</span>
+                <span class="btn-text">OPEN CASE FILE</span>
+            </button>
+
+            <p class="case-count">Active Cases: <span id="caseCount">247</span></p>
+        </section>
+
+        <section class="info-section">
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3 class="info-title">INVESTIGATE</h3>
+                    <p class="info-desc">Real-world mysteries based on archival events. Research, analyze, and document
+                        your findings.</p>
+                </div>
+                <div class="info-card">
+                    <h3 class="info-title">DOCUMENT</h3>
+                    <p class="info-desc">Take detailed notes, timestamp your discoveries, and build your case theory.
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3 class="info-title">SHARE</h3>
+                    <p class="info-desc">Submit your investigation to the community archive. Read others' theories and
+                        reopen cases.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="landing-footer">
+            <nav class="footer-nav">
+                <a href="archive.html" class="footer-link">Community Archive</a>
+                <a href="#about" class="footer-link">About</a>
+                <a href="#guidelines" class="footer-link">Guidelines</a>
+            </nav>
+            <p class="footer-text">A platform for critical thinkers and curious minds</p>
+        </footer>
+    </main>
+
+    <script src="js/utils.js"></script>
+    <script>
+        // Typewriter effect
+        const introTexts = [
+            "You are an investigator.",
+            "Each case you receive is based on real events.",
+            "The evidence is incomplete. The truth is elusive.",
+            "Your mission: Research. Analyze. Document. Conclude.",
+            "Welcome to Case011."
+        ];
+
+        let textIndex = 0;
+        let charIndex = 0;
+        let currentText = '';
+        let isDeleting = false;
+        const typeSpeed = 50;
+        const deleteSpeed = 30;
+        const pauseTime = 2000;
+
+        function typeWriter() {
+            const introElement = document.getElementById('introText');
+
+            if (textIndex < introTexts.length) {
+                if (!isDeleting && charIndex <= introTexts[textIndex].length) {
+                    currentText = introTexts[textIndex].substring(0, charIndex);
+                    introElement.textContent = currentText;
+                    charIndex++;
+                    setTimeout(typeWriter, typeSpeed);
+                } else if (charIndex === introTexts[textIndex].length + 1) {
+                    setTimeout(() => {
+                        textIndex++;
+                        charIndex = 0;
+                        if (textIndex < introTexts.length) {
+                            introElement.textContent += '\n';
+                        }
+                        typeWriter();
+                    }, pauseTime);
+                }
+            }
+        }
+
+        // Start typewriter on load
+        window.addEventListener('load', () => {
+            setTimeout(typeWriter, 500);
+        });
+
+        // Open case button - AI works automatically in background
+        document.getElementById('openCaseBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            const caseHash = generateCaseHash();
+            console.log('Opening case:', caseHash);
+            // AI is always enabled but invisible to user
+            window.location.href = `case.html?hash=${caseHash}&ai=true`;
+        });
+
+        // Animate case count
+        function animateCaseCount() {
+            const countElement = document.getElementById('caseCount');
+            let count = 0;
+            const target = 247;
+            const duration = 2000;
+            const increment = target / (duration / 16);
+
+            function updateCount() {
+                count += increment;
+                if (count < target) {
+                    countElement.textContent = Math.floor(count);
+                    requestAnimationFrame(updateCount);
+                } else {
+                    countElement.textContent = target;
+                }
+            }
+            updateCount();
+        }
+
+        setTimeout(animateCaseCount, 3000);
+    </script>
+</body>
+
+</html>
