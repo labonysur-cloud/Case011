@@ -20,7 +20,7 @@
 
     <header class="case-header">
         <div class="header-content">
-            <a href="index.html" class="back-link">&#8592; Back to Home</a>
+            <a href="index.html" class="back-link" id="backLink">&#8592; Back to Home</a>
             <div style="display: flex; align-items: center; gap: 15px;">
                 <img src="assets/logo.png" alt="Logo" class="header-logo">
                 <h1 class="case-title">SUBMIT INVESTIGATION</h1>
@@ -117,8 +117,20 @@
             // Back link
             document.getElementById('backLink').href = `case.html?hash=${caseHash}`;
 
-            // Load case data
-            const caseData = generateCase(caseHash);
+            // Load case data (prioritize session data for OSINT consistency)
+            let caseData;
+            const sessionData = sessionStorage.getItem('activeCaseData');
+            if (sessionData) {
+                const parsed = JSON.parse(sessionData);
+                if (parsed.hash === caseHash) {
+                    caseData = parsed;
+                }
+            }
+
+            if (!caseData) {
+                caseData = generateCase(caseHash);
+            }
+
             const notebook = localStorage.getItem(`case_notebook_${caseHash}`) || '';
 
             // Populate summary

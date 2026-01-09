@@ -1,8 +1,8 @@
 /* ===================================
-   CASE011 - Animation Styles
+   CASE011 - Keyframe Animations
    =================================== */
 
-/* Fade In Animation */
+/* Basic Fade In */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -15,111 +15,88 @@
     }
 }
 
-/* Slide In Animation */
-@keyframes slideIn {
-    from {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+.fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
 }
 
-/* Slide In From Left */
+/* Slide In from Left */
 @keyframes slideInLeft {
     from {
-        transform: translateX(-100%);
         opacity: 0;
+        transform: translateX(-30px);
     }
 
     to {
-        transform: translateX(0);
         opacity: 1;
+        transform: translateX(0);
     }
 }
 
-/* Slide In From Right */
+.slide-in-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+}
+
+/* Slide In from Right */
 @keyframes slideInRight {
     from {
-        transform: translateX(100%);
         opacity: 0;
+        transform: translateX(30px);
     }
 
     to {
+        opacity: 1;
         transform: translateX(0);
-        opacity: 1;
     }
 }
 
-/* Blink Animation (for cursor) */
-@keyframes blink {
-
-    0%,
-    50% {
-        opacity: 1;
-    }
-
-    51%,
-    100% {
-        opacity: 0;
-    }
+.slide-in-right {
+    animation: slideInRight 0.6s ease-out forwards;
 }
 
-/* Pulse Animation */
-@keyframes pulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: scale(1.05);
-        opacity: 0.8;
-    }
-}
-
-/* Glow Animation */
-@keyframes glow {
-
-    0%,
-    100% {
-        box-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
+/* Pulse Glow Effect */
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(0, 212, 255, 0.2);
     }
 
     50% {
         box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
     }
-}
-
-/* Shimmer Animation */
-@keyframes shimmer {
-    0% {
-        background-position: -1000px 0;
-    }
 
     100% {
-        background-position: 1000px 0;
+        box-shadow: 0 0 5px rgba(0, 212, 255, 0.2);
     }
 }
 
-/* Rotate Animation */
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
+.pulse-glow {
+    animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* Typing Indicator Blink */
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
     }
 
-    to {
-        transform: rotate(360deg);
+    50% {
+        opacity: 0;
     }
 }
 
-/* Bounce Animation */
-@keyframes bounce {
+.typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background-color: var(--color-accent-cyan);
+    margin-left: 2px;
+    animation: blink 0.8s infinite;
+    vertical-align: middle;
+}
+
+/* Floating Animation */
+@keyframes floating {
 
     0%,
     100% {
@@ -131,167 +108,266 @@
     }
 }
 
-/* Shake Animation */
-@keyframes shake {
+.floating {
+    animation: floating 3s ease-in-out infinite;
+}
 
-    0%,
+/* Glitch Effect Subtle */
+@keyframes glitchSubtle {
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform: translate(-2px, 2px);
+    }
+
+    40% {
+        transform: translate(-2px, -2px);
+    }
+
+    60% {
+        transform: translate(2px, 2px);
+    }
+
+    80% {
+        transform: translate(2px, -2px);
+    }
+
     100% {
-        transform: translateX(0);
-    }
-
-    25% {
-        transform: translateX(-5px);
-    }
-
-    75% {
-        transform: translateX(5px);
+        transform: translate(0);
     }
 }
 
-/* Utility Animation Classes */
-.fade-in {
-    animation: fadeIn 0.5s ease-in;
+.glitch-hover:hover {
+    animation: glitchSubtle 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
 }
 
-.slide-in {
-    animation: slideIn 0.5s ease-out;
-}
+/* Success Shimmer */
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
 
-.slide-in-left {
-    animation: slideInLeft 0.5s ease-out;
-}
-
-.slide-in-right {
-    animation: slideInRight 0.5s ease-out;
-}
-
-.pulse {
-    animation: pulse 2s infinite;
-}
-
-.glow {
-    animation: glow 2s infinite;
+    100% {
+        background-position: 200% 0;
+    }
 }
 
 .shimmer {
     background: linear-gradient(90deg,
             transparent,
-            rgba(0, 212, 255, 0.1),
+            rgba(255, 176, 0, 0.1),
             transparent);
-    background-size: 1000px 100%;
-    animation: shimmer 3s infinite;
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
 }
 
-/* Stagger Animation for Lists */
-.stagger-item {
-    opacity: 0;
-    animation: fadeIn 0.5s ease-in forwards;
+/* Loading Spinner */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-.stagger-item:nth-child(1) {
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(0, 212, 255, 0.1);
+    border-top-color: var(--color-accent-cyan);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Stamp Animation */
+@keyframes stampGrow {
+    0% {
+        opacity: 0;
+        transform: scale(3) rotate(-15deg);
+    }
+
+    100% {
+        opacity: 0.2;
+        transform: scale(1) rotate(-15deg);
+    }
+}
+
+.stamped {
+    animation: stampGrow 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Scale Up Center */
+@keyframes scaleUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.scale-up {
+    animation: scaleUp 0.4s ease-out forwards;
+}
+
+/* Glitch Text (Previously used in Decryption Overlay) */
+@keyframes glitch {
+    0% {
+        clip: rect(44px, 450px, 56px, 0);
+    }
+
+    5% {
+        clip: rect(62px, 450px, 15px, 0);
+    }
+
+    10% {
+        clip: rect(34px, 450px, 11px, 0);
+    }
+
+    15% {
+        clip: rect(98px, 450px, 61px, 0);
+    }
+
+    20% {
+        clip: rect(75px, 450px, 23px, 0);
+    }
+
+    25% {
+        clip: rect(10px, 450px, 82px, 0);
+    }
+
+    30% {
+        clip: rect(45px, 450px, 7px, 0);
+    }
+
+    35% {
+        clip: rect(29px, 450px, 94px, 0);
+    }
+
+    40% {
+        clip: rect(88px, 450px, 43px, 0);
+    }
+
+    45% {
+        clip: rect(12px, 450px, 55px, 0);
+    }
+
+    50% {
+        clip: rect(67px, 450px, 100px, 0);
+    }
+
+    55% {
+        clip: rect(33px, 450px, 4px, 0);
+    }
+
+    60% {
+        clip: rect(78px, 450px, 92px, 0);
+    }
+
+    65% {
+        clip: rect(19px, 450px, 31px, 0);
+    }
+
+    70% {
+        clip: rect(54px, 450px, 84px, 0);
+    }
+
+    75% {
+        clip: rect(3px, 450px, 63px, 0);
+    }
+
+    80% {
+        clip: rect(91px, 450px, 22px, 0);
+    }
+
+    85% {
+        clip: rect(40px, 450px, 73px, 0);
+    }
+
+    90% {
+        clip: rect(6px, 450px, 48px, 0);
+    }
+
+    95% {
+        clip: rect(82px, 450px, 18px, 0);
+    }
+
+    100% {
+        clip: rect(27px, 450px, 96px, 0);
+    }
+}
+
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 2px;
+    text-shadow: -1px 0 red;
+    top: 0;
+    color: var(--color-text-primary);
+    background: var(--color-bg-dark);
+    overflow: hidden;
+    clip: rect(0, 900px, 0, 0);
+    animation: glitch 2s infinite linear alternate-reverse;
+}
+
+.glitch-text::before {
+    content: attr(data-text);
+    position: absolute;
+    left: -2px;
+    text-shadow: 1px 0 blue;
+    top: 0;
+    color: var(--color-text-primary);
+    background: var(--color-bg-dark);
+    overflow: hidden;
+    clip: rect(0, 900px, 0, 0);
+    animation: glitch 3s infinite linear alternate-reverse;
+}
+
+/* Reveal Animation */
+@keyframes reveal {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+.reveal {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: reveal 1.5s steps(40, end) forwards;
+}
+
+/* Staggered Appearance */
+.stagger-1 {
     animation-delay: 0.1s;
 }
 
-.stagger-item:nth-child(2) {
+.stagger-2 {
     animation-delay: 0.2s;
 }
 
-.stagger-item:nth-child(3) {
+.stagger-3 {
     animation-delay: 0.3s;
 }
 
-.stagger-item:nth-child(4) {
-    animation-delay: 0.4s;
-}
-
-.stagger-item:nth-child(5) {
-    animation-delay: 0.5s;
-}
-
-.stagger-item:nth-child(6) {
-    animation-delay: 0.6s;
-}
-
-/* Hover Effects */
-.hover-lift {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.hover-lift:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
-}
-
-.hover-glow {
-    transition: box-shadow 0.3s ease;
-}
-
-.hover-glow:hover {
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-}
-
-/* Loading Animation */
-.loading-spinner {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    border: 3px solid var(--color-border);
-    border-top-color: var(--color-accent-cyan);
-    border-radius: 50%;
-    animation: rotate 1s linear infinite;
-}
-
-/* Typing Indicator */
-.typing-indicator {
-    display: inline-flex;
-    gap: 4px;
-}
-
-.typing-indicator span {
-    width: 8px;
-    height: 8px;
-    background-color: var(--color-accent-cyan);
-    border-radius: 50%;
-    animation: bounce 1.4s infinite;
-}
-
-.typing-indicator span:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.typing-indicator span:nth-child(3) {
+.stagger-4 {
     animation-delay: 0.4s;
 }
 
 /* Page Transition */
 .page-transition-enter {
     opacity: 0;
-    transform: translateY(20px);
+    transform: scale(0.98);
 }
 
 .page-transition-enter-active {
     opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.page-transition-exit {
-    opacity: 1;
-}
-
-.page-transition-exit-active {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
+    transform: scale(1);
+    transition: opacity 300ms, transform 300ms;
 }

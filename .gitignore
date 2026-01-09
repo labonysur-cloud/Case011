@@ -1,6 +1,41 @@
-.gemini/
-.system_generated/
+# Node modules (if you add npm later)
 node_modules/
-dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
 .env
+.env.local
+.env.*.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build outputs
+dist/
+build/
+*.min.js
+*.min.css
+
+# Logs
+logs/
 *.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Test coverage
+coverage/
+.nyc_output/

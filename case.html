@@ -19,19 +19,18 @@
     <div class="grain-overlay"></div>
     <div id="decryptionOverlay" class="decryption-overlay">
         <div class="decryption-content">
-            <h2 class="decryption-header glitch-text">ACCESSING DEEP ARCHIVES...</h2>
-            <div id="aiStatusText" class="decryption-status">ESTABLISHING ANALYTICAL CONNECTION...</div>
+            <h2 class="decryption-header glitch-text">OSINT LIVE SCANNING...</h2>
+            <div id="aiStatusText" class="decryption-status">ESTABLISHING GLOBAL ARCHIVAL LINK...</div>
             <div class="decryption-bar-container">
-                <div id="aiProgressBar" class="decryption-bar"></div>
+                <div id="aiProgressBar" class="decryption-bar" style="width: 100%; transition: width 0.5s ease;"></div>
             </div>
             <div class="decryption-meta">
-                <span id="aiProgressPercent">0%</span>
-                <span>SECURE ARCHIVAL LINK</span>
+                <span>INTERCEPTING...</span>
+                <span>SECURE KNOWLEDGE STREAM</span>
             </div>
             <p
                 style="font-size: 0.7rem; color: var(--color-text-muted); margin-top: 2rem; border-top: 1px dashed var(--color-border); padding-top: 1rem;">
-                * Warning: High-resolution archival reconstruction in progress. One-time data download required
-                (~400MB).
+                * Warning: Direct archival interception in progress. Zero API keys intercepted.
             </p>
         </div>
     </div>
@@ -62,11 +61,42 @@
                     <h3 class="case-name" id="caseName">DECRYPTING...</h3>
                     <div class="case-details">
                         <span class="detail-item">Category: <strong id="caseCategory"></strong></span>
-                        <span class="detail-item">Difficulty: <strong id="caseDifficulty"></strong></span>
+                        <span class="detail-item">Difficulty: <strong id="caseDifficulty"></strong><span
+                                id="difficultyBadge"></span></span>
                         <span class="detail-item">Date Opened: <strong id="dateOpened"></strong></span>
                     </div>
                     <div class="briefing-text" id="briefingText">
                         <p>Awaiting analytical reconstruction...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress Tracker -->
+            <section class="progress-tracker" id="progressTracker">
+                <div class="progress-header">
+                    <span class="progress-title">INVESTIGATION PROGRESS</span>
+                    <span class="progress-percentage" id="progressText">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="progress-achievements" id="achievementsList"></div>
+            </section>
+
+            <!-- Signal Strength Indicator -->
+            <section class="signal-strength-container" id="signalStrengthContainer">
+                <div class="signal-strength-header">
+                    <span class="signal-strength-title">SOLUTION PROXIMITY</span>
+                    <div id="signalStrength">
+                        <div class="signal-bars">
+                            <div class="signal-bar"></div>
+                            <div class="signal-bar"></div>
+                            <div class="signal-bar"></div>
+                            <div class="signal-bar"></div>
+                            <div class="signal-bar"></div>
+                        </div>
+                        <div class="signal-percentage">0%</div>
+                        <div class="signal-hint">SIGNAL WEAK - BEGIN RESEARCH INTO CORE EVIDENCE</div>
                     </div>
                 </div>
             </section>
@@ -86,9 +116,15 @@
             <section class="notebook-section">
                 <div class="section-header">
                     <h2 class="section-title">INVESTIGATION NOTEBOOK</h2>
+                    <div class="investigation-timer">
+                        <span class="timer-label">TIME:</span>
+                        <span class="timer-display" id="timerDisplay">00:00:00</span>
+                    </div>
                     <div class="notebook-controls">
                         <button class="icon-btn" id="timestampBtn" title="Insert timestamp">&#128337;</button>
                         <button class="icon-btn" id="clearBtn" title="Clear notebook">&#128465;</button>
+                        <button class="icon-btn export-pdf-btn" id="exportPdfBtn" title="Export as PDF"
+                            onclick="window.print()">&#128438; PDF</button>
                         <span class="save-indicator" id="saveIndicator">Auto-saved</span>
                     </div>
                 </div>
@@ -131,15 +167,56 @@ The truth is in the details."></textarea>
         </div>
     </footer>
 
+    <!-- Ambience Control Panel -->
+    <div class="ambience-control" id="ambienceControl">
+        <div class="ambience-header">
+            <span class="ambience-title">ATMOSPHERE</span>
+            <button class="ambience-toggle" id="ambienceToggle">&#9660;</button>
+        </div>
+        <div class="ambience-body" id="ambienceBody">
+            <div class="ambience-modes">
+                <button class="ambience-mode-btn" data-mode="silent">Silent</button>
+                <button class="ambience-mode-btn" data-mode="terminal">Terminal Hum</button>
+                <button class="ambience-mode-btn" data-mode="rain">Rain on Window</button>
+                <button class="ambience-mode-btn" data-mode="radio">Vintage Radio</button>
+            </div>
+            <div class="ambience-volume">
+                <span class="ambience-volume-label">Volume:</span>
+                <input type="range" class="ambience-volume-slider" id="volumeSlider" min="0" max="100" value="30">
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switcher" id="themeSwitcher">
+        <div class="theme-switcher-title">THEME</div>
+        <div class="theme-buttons">
+            <button class="theme-btn active" data-theme="dark">Dark</button>
+            <button class="theme-btn" data-theme="crt">CRT</button>
+            <button class="theme-btn" data-theme="light">Light</button>
+        </div>
+    </div>
+
     <script src="js/utils.js"></script>
     <script src="js/caseGenerator.js"></script>
     <script src="js/aiGenerator.js"></script>
     <script src="js/notebook.js"></script>
+    <script src="js/ambience.js"></script>
+    <script src="js/progressTracker.js"></script>
+    <script src="js/secretDetector.js"></script>
+    <script src="js/caseAge.js"></script>
+    <script src="js/signalStrength.js"></script>
+    <script src="js/smartHighlight.js"></script>
+    <script src="js/themeSwitcher.js"></script>
+    <script src="js/investigationTimer.js"></script>
+    <script src="js/featureInit.js"></script>
     <script>
         // Initialize case page
         const urlParams = new URLSearchParams(window.location.search);
         const caseHash = urlParams.get('hash');
-        const useAI = urlParams.get('ai') === 'true'; // Check if AI mode is enabled
+
+        // Oracle Engine is default unless explicitly disabled
+        const useAI = urlParams.get('ai') !== 'false';
 
         if (!caseHash) {
             console.error('No case hash provided. Redirecting...');
@@ -149,121 +226,309 @@ The truth is in the details."></textarea>
             }, 2000);
         } else {
             // Display case hash
-            document.getElementById('caseHashDisplay').textContent = `#${caseHash}`;
+            const hashDisplay = document.getElementById('caseHashDisplay');
+            if (hashDisplay) hashDisplay.textContent = `#${caseHash}`;
 
-            // Load case data (with AI if enabled)
-            async function loadCase() {
-                let caseData;
+            // Helper to populate UI with case data
+            function renderCaseData(caseData) {
+                if (!caseData) return;
 
-                if (useAI) {
-                    // Show initialization status
-                    const statusBox = document.getElementById('aiStatusBox');
-                    const statusText = document.getElementById('aiStatusText');
-                    const progressBar = document.getElementById('aiProgressBar');
-                    const progressPercent = document.getElementById('aiProgressPercent');
+                // Content population
+                const elements = {
+                    name: document.getElementById('caseName'),
+                    category: document.getElementById('caseCategory'),
+                    difficulty: document.getElementById('caseDifficulty'),
+                    date: document.getElementById('dateOpened'),
+                    briefing: document.getElementById('briefingText'),
+                    wiki: document.getElementById('wikiLinkContainer'),
+                    artifacts: document.getElementById('artifactsGrid'),
+                    count: document.getElementById('artifactCount')
+                };
 
-                    statusBox.style.display = 'block';
-                    document.getElementById('caseBriefing').innerHTML = '<p style="color: var(--color-accent-cyan); text-align: center; margin-top: 2rem;">STANDBY: Processing signal from browser-side intelligence model...</p>';
+                if (elements.name) elements.name.textContent = caseData.title;
+                if (elements.category) elements.category.textContent = (caseData.category || 'Unknown').toUpperCase();
+                if (elements.difficulty) {
+                    const difficulty = caseData.difficulty || 'Normal';
+                    elements.difficulty.textContent = difficulty.toUpperCase();
 
-                    try {
-                        // Initialize and generate with client-side AI
-                        caseData = await generateCaseWithAI(caseHash, true);
-
-                        // Callback for progress if we provide it to initClientAI in aiGenerator.js
-                        // (We'll update aiGenerator.js to use these UI elements if they exist)
-
-                        statusBox.style.display = 'none'; // Hide after success
-                    } catch (error) {
-                        console.error('AI generation failed:', error);
-                        statusText.textContent = 'SYSTEM ERROR: Falling back to static archives...';
-                        statusText.style.color = 'var(--color-accent-red)';
-                        caseData = generateCase(caseHash);
-                        setTimeout(() => statusBox.style.display = 'none', 3000);
+                    // Add difficulty badge
+                    const badgeElement = document.getElementById('difficultyBadge');
+                    if (badgeElement) {
+                        const badgeClass = difficulty.toLowerCase() === 'easy' ? 'difficulty-easy' :
+                            difficulty.toLowerCase() === 'hard' ? 'difficulty-hard' : 'difficulty-medium';
+                        badgeElement.innerHTML = `<span class="difficulty-badge ${badgeClass}">${difficulty.toUpperCase()}</span>`;
                     }
-                } else {
-                    caseData = generateCase(caseHash);
+                }
+                if (elements.date) elements.date.textContent = formatDate(new Date());
+
+                // Set briefing and add preview image if exists
+                if (elements.briefing) {
+                    let briefingHTML = caseData.briefing;
+                    if (caseData.image) {
+                        briefingHTML = `
+                            <div class="case-preview-image">
+                                <img src="${caseData.image}" alt="Archival Preview" onerror="this.parentElement.style.display='none'">
+                                <div class="image-label">ARCHIVAL PHOTOGRAPHIC RECORD - UNKNOWN DATE</div>
+                            </div>
+                        ` + briefingHTML;
+                    }
+                    elements.briefing.innerHTML = briefingHTML;
                 }
 
-                // Populate case details
-                document.getElementById('caseName').textContent = caseData.title;
-                document.getElementById('caseCategory').textContent = caseData.category.toUpperCase();
-                document.getElementById('caseDifficulty').textContent = caseData.difficulty.toUpperCase();
-                document.getElementById('dateOpened').textContent = formatDate(new Date());
-                document.getElementById('caseBriefing').innerHTML = caseData.briefing;
-
-                // Wikipedia Link
+                // Add Wikipedia Link to the metadata or footer
                 if (caseData.wikipedia) {
-                    document.getElementById('wikiLinkContainer').innerHTML = `
-                        <a href="${caseData.wikipedia}" target="_blank" class="primary-btn" style="background: transparent; border: 1px solid var(--color-accent-amber); color: var(--color-accent-amber); font-size: 0.9rem; padding: 0.5rem 1rem;">
-                            &#128214; RESEARCH ON WIKIPEDIA
-                        </a>
+                    const wikiBtnHTML = `
+                        <div class="wiki-link-container" style="margin-top: 2rem; border-top: 1px dashed var(--color-border); padding-top: 1.5rem;">
+                            <a href="${caseData.wikipedia}" target="_blank" class="primary-btn wiki-btn" style="background: rgba(255, 191, 0, 0.1); border: 1px solid var(--color-accent-amber); color: var(--color-accent-amber); text-decoration: none; display: inline-flex; align-items: center; gap: 10px; font-size: 0.8rem; letter-spacing: 1px;">
+                                <span style="font-size: 1.2rem;">&#128214;</span> ACCESS PRIMARY ARCHIVAL SOURCE
+                            </a>
+                        </div>
                     `;
+                    if (elements.briefing) elements.briefing.innerHTML += wikiBtnHTML;
                 }
 
-                // Load artifacts
-                const artifactsGrid = document.getElementById('artifactsGrid');
-                const artifactCount = document.getElementById('artifactCount');
-                if (artifactCount) artifactCount.textContent = `${caseData.artifacts.length} items`;
+                if (elements.count) elements.count.textContent = `${(caseData.artifacts || []).length} items`;
 
-                if (artifactsGrid) {
-                    artifactsGrid.innerHTML = '';
-                    caseData.artifacts.forEach((artifact, index) => {
+                if (elements.artifacts) {
+                    elements.artifacts.innerHTML = '';
+                    (caseData.artifacts || []).forEach((artifact, index) => {
                         const artifactCard = document.createElement('div');
                         artifactCard.className = 'artifact-card';
                         artifactCard.innerHTML = `
-                                <div class="artifact-header">
-                                    <span class="artifact-number">ARTIFACT ${String(index + 1).padStart(2, '0')}</span>
-                                    <span class="artifact-type">${artifact.type.toUpperCase()}</span>
-                                </div>
-                                <h4 class="artifact-title">${artifact.title}</h4>
-                                <p class="artifact-desc">${artifact.description || ''}</p>
-                                <a href="${artifact.url}" target="_blank" class="artifact-link" rel="noopener noreferrer">
-                                    View Evidence &#8599;
-                                </a>
-                            `;
-                        artifactsGrid.appendChild(artifactCard);
+                            <div class="artifact-header">
+                                <span class="artifact-number">ARTIFACT ${String(index + 1).padStart(2, '0')}</span>
+                                <span class="artifact-type">${(artifact.type || 'EVIDENCE').toUpperCase()}</span>
+                            </div>
+                            <h4 class="artifact-title">${artifact.title}</h4>
+                            <p class="artifact-desc">${artifact.description || ''}</p>
+                            <a href="${artifact.url}" target="_blank" class="artifact-link" rel="noopener noreferrer">
+                                View Evidence &#8599;
+                            </a>`;
+                        elements.artifacts.appendChild(artifactCard);
+                    });
+                }
+            }
+
+            // Load case data
+            async function loadCase() {
+                const overlay = document.getElementById('decryptionOverlay');
+                const briefingElement = document.getElementById('briefingText');
+                const statusText = document.getElementById('aiStatusText');
+                let caseData;
+
+                try {
+                    if (overlay) overlay.style.display = 'flex';
+                    if (statusText) statusText.textContent = 'INITIATING LIVE OSINT SCAN...';
+
+                    if (useAI) {
+                        if (briefingElement) briefingElement.innerHTML = '<p style="color: var(--color-accent-cyan); text-align: center; margin-top: 2rem;">STANDBY: Intercepting signal from Global Knowledge Repositories...</p>';
+                        caseData = await generateCaseWithAI(caseHash, true);
+                    } else {
+                        caseData = generateCase(caseHash);
+                    }
+
+                    if (!caseData) throw new Error('Data reconstruction failed');
+                    renderCaseData(caseData);
+
+                    // Success: Hide overlay
+                    setTimeout(() => {
+                        if (overlay) {
+                            overlay.classList.add('hidden');
+                            setTimeout(() => overlay.style.display = 'none', 1000);
+                        }
+                    }, 800);
+
+                } catch (error) {
+                    console.error('Case loading failed:', error);
+                    if (statusText) {
+                        statusText.textContent = 'OSINT ERROR: Reverting to local archives...';
+                        statusText.style.color = 'var(--color-accent-red)';
+                    }
+
+                    caseData = generateCase(caseHash);
+                    renderCaseData(caseData);
+
+                    setTimeout(() => {
+                        if (overlay) {
+                            overlay.classList.add('hidden');
+                            setTimeout(() => overlay.style.display = 'none', 1000);
+                        }
+                    }, 2000);
+                }
+            }
+
+            loadCase();
+            initNotebook(caseHash);
+
+            // Initialize Progress Tracker
+            let progressTracker, secretDetector;
+            let caseData = null;
+
+            async function initializeFeatures() {
+                // Wait for case data to load
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                // Get case data from the page
+                const caseName = document.getElementById('caseName')?.textContent;
+                const caseId = getCaseIdFromTitle(caseName);
+
+                // Initialize progress tracker
+                progressTracker = new ProgressTracker(caseHash);
+                progressTracker.startTracking();
+                window.progressTracker = progressTracker;
+
+                // Initialize secret detector
+                if (caseId) {
+                    secretDetector = new SecretDetector(caseId, caseHash);
+                    const notebookArea = document.getElementById('notebookArea');
+                    if (notebookArea) {
+                        secretDetector.startMonitoring(notebookArea);
+                    }
+                }
+
+                // Hook into notebook updates for progress tracking
+                const notebookArea = document.getElementById('notebookArea');
+                if (notebookArea && progressTracker) {
+                    notebookArea.addEventListener('input', () => {
+                        const wordCount = countWords(notebookArea.value);
+                        progressTracker.updateWordCount(wordCount);
                     });
                 }
 
-                // Success: Hide cinematic overlay
-                setTimeout(() => {
-                    overlay.classList.add('hidden');
-                    setTimeout(() => overlay.style.display = 'none', 1000);
-                }, 500);
+                // Track artifact views
+                document.querySelectorAll('.artifact-link').forEach((link, index) => {
+                    link.addEventListener('click', () => {
+                        if (progressTracker) {
+                            progressTracker.markArtifactViewed(`artifact-${index}`);
+                        }
+                    });
+                });
 
-            } catch (error) {
-                console.error('Decryption failed:', error);
-                overlay.style.display = 'none';
-                alert('CRITICAL ARCHIVO ERROR: System Reverting to Manual Backups.');
-                // Fallback to static case
-                const fallbackData = generateCase(caseHash);
-                location.reload(); // Hard fallback for now
+                // Override timestamp button to track
+                const originalTimestampBtn = document.getElementById('timestampBtn');
+                if (originalTimestampBtn && progressTracker) {
+                    originalTimestampBtn.addEventListener('click', () => {
+                        progressTracker.incrementTimestamps();
+                    });
+                }
+
+                // Initialize Case Age Tracker
+                const caseAgeTracker = new CaseAgeTracker(caseHash);
+                caseAgeTracker.applyCaseAgeStyles();
+
+                // Initialize Signal Strength Indicator
+                if (caseId) {
+                    const signalStrength = new SignalStrengthIndicator(caseId, caseHash);
+                    const notebookArea = document.getElementById('notebookArea');
+                    if (notebookArea) {
+                        signalStrength.startMonitoring(notebookArea);
+                    }
+                }
+
+                // Initialize Smart Highlighter
+                const smartHighlighter = new SmartHighlighter();
+                const notebookArea2 = document.getElementById('notebookArea');
+                if (notebookArea2) {
+                    smartHighlighter.startMonitoring(notebookArea2);
+                }
+
+                // Initialize Investigation Timer
+                const investigationTimer = new InvestigationTimer(caseHash);
+                investigationTimer.start();
+                window.investigationTimer = investigationTimer;
             }
-        }
 
-        // Load the case
-        loadCase();
+            initializeFeatures();
 
-        // Initialize notebook
-        initNotebook(caseHash);
+            // Initialize Ambience Controls
+            const ambienceController = getAmbienceController();
+            const ambienceToggle = document.getElementById('ambienceToggle');
+            const ambienceBody = document.getElementById('ambienceBody');
+            const ambienceControl = document.getElementById('ambienceControl');
+            const volumeSlider = document.getElementById('volumeSlider');
 
-        // Share button
-        document.getElementById('shareBtn').addEventListener('click', () => {
-            const shareUrl = window.location.href;
-            navigator.clipboard.writeText(shareUrl).then(() => {
-                alert('Case link copied to clipboard!');
+            // Collapse/expand ambience panel
+            let isCollapsed = false;
+            ambienceToggle.addEventListener('click', () => {
+                isCollapsed = !isCollapsed;
+                if (isCollapsed) {
+                    ambienceBody.style.display = 'none';
+                    ambienceToggle.innerHTML = '&#9650;';
+                } else {
+                    ambienceBody.style.display = 'block';
+                    ambienceToggle.innerHTML = '&#9660;';
+                }
             });
-        });
 
-        // Submit button
-        document.getElementById('submitBtn').addEventListener('click', () => {
-            const notebook = document.getElementById('notebookArea').value;
-            if (notebook.trim().length < 100) {
-                alert('Please write at least 100 characters in your investigation notes before submitting.');
-                return;
-            }
-            window.location.href = `submit.html?hash=${caseHash}`;
-        });
+            // Ambience mode buttons
+            document.querySelectorAll('.ambience-mode-btn').forEach(btn => {
+                const mode = btn.dataset.mode;
+
+                // Set active state based on saved preference
+                if (ambienceController.getCurrentMode() === mode) {
+                    btn.classList.add('active');
+                }
+
+                btn.addEventListener('click', () => {
+                    // Remove active from all buttons
+                    document.querySelectorAll('.ambience-mode-btn').forEach(b => b.classList.remove('active'));
+
+                    // Add active to clicked button
+                    btn.classList.add('active');
+
+                    // Play the selected mode
+                    ambienceController.playMode(mode);
+                });
+            });
+
+            // Volume control
+            volumeSlider.value = ambienceController.getVolume() * 100;
+            volumeSlider.addEventListener('input', (e) => {
+                const volume = e.target.value / 100;
+                ambienceController.setVolume(volume);
+            });
+
+            // Auto-play saved mode on load
+            setTimeout(() => {
+                const savedMode = ambienceController.getCurrentMode();
+                if (savedMode && savedMode !== 'silent') {
+                    ambienceController.playMode(savedMode);
+                }
+            }, 1000);
+
+            // Cleanup on page unload
+            window.addEventListener('beforeunload', () => {
+                if (progressTracker) {
+                    progressTracker.stopTracking();
+                }
+                if (secretDetector) {
+                    secretDetector.stopMonitoring();
+                }
+                if (ambienceController) {
+                    ambienceController.stop();
+                }
+            });
+
+            document.getElementById('shareBtn').addEventListener('click', () => {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Case link copied to clipboard!');
+                });
+            });
+
+            document.getElementById('submitBtn').addEventListener('click', () => {
+                const notebook = document.getElementById('notebookArea').value;
+                if (notebook.trim().length < 100) {
+                    alert('Please write at least 100 characters in your investigation notes before submitting.');
+                    return;
+                }
+
+                // Save active case data for the submission page
+                if (caseData) {
+                    sessionStorage.setItem('activeCaseData', JSON.stringify(caseData));
+                }
+
+                window.location.href = `submit.html?hash=${caseHash}`;
+            });
         }
     </script>
 </body>

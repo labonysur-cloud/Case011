@@ -42,6 +42,12 @@
                 <span class="btn-text">OPEN CASE FILE</span>
             </button>
 
+            <button type="button" class="primary-btn" id="randomCaseBtn"
+                style="margin-top: 1rem; background-color: rgba(255, 176, 0, 0.1); border-color: var(--color-accent-amber); color: var(--color-accent-amber);">
+                <span class="btn-icon">&#127922;</span>
+                <span class="btn-text">RANDOM COLD CASE</span>
+            </button>
+
             <p class="case-count">Active Cases: <span id="caseCount">247</span></p>
         </section>
 
@@ -183,6 +189,23 @@
             const caseHash = generateCaseHash();
             // No parameters needed, AI is now the default
             window.location.href = `case.html?hash=${caseHash}`;
+        });
+
+        // Random case button
+        document.getElementById('randomCaseBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            const btn = e.currentTarget;
+            const originalText = btn.querySelector('.btn-text').textContent;
+
+            // Show loading state
+            btn.querySelector('.btn-text').textContent = 'ACCESSING CLASSIFIED FILES...';
+            btn.disabled = true;
+
+            // Simulate dramatic loading
+            setTimeout(() => {
+                const caseHash = generateCaseHash();
+                window.location.href = `case.html?hash=${caseHash}`;
+            }, 800);
         });
 
         // Animate case count
