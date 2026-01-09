@@ -14,7 +14,7 @@
 **[Launch Investigation Terminal →](https://your-username.github.io/case011/)**
 
 *Replace with your actual deployment URL after hosting*
-
+Check Mine :         https://case011.netlify.app/
 ---
 
 ## ✨ Features
