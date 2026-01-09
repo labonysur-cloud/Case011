@@ -1,121 +1,234 @@
 # 🕵️ CASE011: Archives of the Unexplained
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![No Dependencies](https://img.shields.io/badge/Dependencies-None-green.svg)]()
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 **Each case is real. Each trail is incomplete. The truth is in the details.**
 
-![CASE011 Hero Image](file:///C:/Users/Admin/.gemini/antigravity/brain/8097a75e-08b7-4b7a-8cd9-fbe120786211/landing_page_1767896794973.png)
+> A professional-grade investigation platform that transforms real-world mysteries into interactive detective experiences. Powered by live OSINT scraping from Wikipedia, featuring a retro-terminal aesthetic and zero-dependency architecture.
 
-## 🌌 Overview
+## 🎯 Live Demo
 
-CASE011 is a professional-grade investigation platform designed for critical thinkers and researchers. It bridges the gap between historical archival records and interactive storytelling by leveraging a custom-built **OSINT (Open Source Intelligence) Scraper** to pull real-world mysteries directly into a cinematic investigation interface.
+**[Launch Investigation Terminal →](https://your-username.github.io/case011/)**
 
-### 🧩 Key Pillars
-- **Authenticity**: Every case is rooted in real-world documentation.
-- **Immersion**: Experience a "Digital Terminal" aesthetic with CRT effects and vintage typing sequences.
-- **Privacy**: Zero tracking, zero account requirements, and 100% serverless logic.
-- **Innovation**: Real-time archival interception via Wikipedia Core.
+*Replace with your actual deployment URL after hosting*
 
 ---
 
-## 🏗️ System Architecture
+## ✨ Features
 
-The platform operates on a decentralized, purely frontend architecture designed for speed and persistence.
+### 🔍 **Live OSINT Intelligence**
+- Real-time case generation from Wikipedia's mystery archives
+- 13+ categories: Disappearances, UFOs, Cryptids, Unsolved Crimes, Archaeological Anomalies
+- Zero API keys required - completely free to run
 
-```mermaid
-graph TD
-    User([Investigator]) --> Landing[Landing Page / Mission Brief]
-    Landing --> Gen[Deterministic Case Generator]
-    Gen --> Engine{Intelligence Engine}
-    
-    subgraph "Archival Retrieval Layer"
-    Engine -->|Live Intercept| Scraper[OSINT Scraper - Wikipedia API]
-    Engine -->|Static Fallback| Seed[Local Seed Database]
-    end
-    
-    Scraper --> UI[Investigation Interface]
-    Seed --> UI
-    
-    UI --> Notebook[Persistent Notebook System]
-    Notebook --> Storage[(Local Storage)]
-    Storage --> Archive[Community Archive View]
-```
+### 📝 **Interactive Investigation Notebook**
+- Auto-save functionality (localStorage)
+- One-click timestamp insertion
+- Word/character counter
+- Export to PDF
+- Smart highlighting for key terms
 
----
+### 🎨 **Immersive Retro Interface**
+- CRT monitor effects
+- Typewriter animations
+- Film grain overlay
+- Three themes: Dark, CRT, Light
+- Ambient soundscapes (Terminal Hum, Rain, Vintage Radio)
 
-## 📁 Project Structure
+### 📊 **Progress Tracking**
+- Investigation timer
+- Achievement system
+- Signal strength indicator (proximity to solution)
+- Case aging visualization
+- Secret code detector
 
-```text
-case011/
-├── index.html              # Central Hub & Typewriter Briefing
-├── case.html               # The Investigation Interface
-├── archive.html            # Community Intelligence Repository
-├── mysteries.html          # Categorized Case Catalog
-├── submit.html             # Theory Submission Portal
-├── assets/                 # Visual Brand Identity
-├── styles/                 # Cascading Style Sheets
-│   ├── main.css            # Core Design System & Retro Theming
-│   ├── components.css      # Reusable Dashboard Components
-│   └── animations.css      # Motion Graphics & CRT Effects
-├── js/                     # The Intelligence Logic
-│   ├── aiGenerator.js      # LIVE OSINT Scraper Engine
-│   ├── caseGenerator.js    # Seed Database & Hash Determinism
-│   ├── notebook.js         # Interactive Notebook Controllers
-│   ├── storage.js          # Submissions & Archive Data Management
-│   ├── sharedArchive.js    # Data Synchronization Logic
-│   └── utils.js            # Cryptographic & Utility Functions
-└── README.md               # Tactical Documentation
-```
+### 🏛️ **Community Archive**
+- Submit your theories
+- Browse other investigators' work
+- Reopen and build upon existing cases
+- Search and filter by category
+- Voting system
 
 ---
 
-## ⚡ Core Features
+## 🚀 Quick Start
 
-### 📡 LIVE OSINT Scraper
-The system intercepts live archival streams from Wikipedia, focusing on unexplained phenomena, historical cold cases, and scientific anomalies.
-![OSINT Scanning](file:///C:/Users/Admin/.gemini/antigravity/brain/8097a75e-08b7-4b7a-8cd9-fbe120786211/scanning_overlay_1767896181368.png)
+### Option 1: Direct File Access
+Simply open `index.html` in your browser. Most features will work immediately.
 
-### 📝 Interactive Notebook
-- **Auto-Save**: Never lose a theory. Data is persistently stored in `localStorage`.
-- **Chronological Stamping**: One-click timestamping for timeline reconstruction.
-- **Word/Char Counter**: Track the density of your investigation.
-
-### 🏛️ Community Archive
-Browse theories submitted by other investigators. Reopen cases from their perspective or build upon their findings.
-
----
-
-## 🛠️ Installation & Setup
-
-CASE011 is designed to be lightweight and portable. No build steps are required.
-
-### Recommended Launch Method
-For full feature support (including Wikipedia API CORS handling in some environments), run via a local server:
+### Option 2: Local Server (Recommended)
+For full Wikipedia API support:
 
 ```bash
 # Using Node.js
 npx -y serve . -p 8000
 
-# Using Python
+# Using Python 3
 python -m http.server 8000
+
+# Using PHP
+php -S localhost:8000
 ```
 
-Access the terminal at `http://localhost:8000`.
+Then visit: `http://localhost:8000`
 
 ---
 
-## 🔒 Security & Policy
+## 🏗️ Project Structure
 
-> [!NOTE]
-> **Data Privacy**: All investigation notes and personal theories remain on your local device unless you explicitly click "Submit to Archive". No metadata is collected without consent.
-
-> [!IMPORTANT]
-> **Zero-Key Architecture**: This project uses public OSINT channels. No expensive API keys or external credits are required for full functionality.
+```
+case011/
+├── index.html              # Landing page with typewriter briefing
+├── case.html               # Main investigation interface
+├── archive.html            # Community submissions archive
+├── mysteries.html          # Case catalog browser
+├── submit.html             # Theory submission portal
+├── assets/
+│   └── logo.png           # Brand identity
+├── styles/
+│   ├── main.css           # Core design system
+│   ├── components.css     # UI components
+│   └── animations.css     # CRT effects & animations
+└── js/
+    ├── aiGenerator.js     # Live Wikipedia OSINT scraper
+    ├── caseGenerator.js   # 66+ pre-seeded cases
+    ├── notebook.js        # Note-taking system
+    ├── storage.js         # Archive management
+    ├── progressTracker.js # Achievement system
+    ├── signalStrength.js  # Solution proximity indicator
+    ├── themeSwitcher.js   # Theme management
+    ├── ambience.js        # Audio atmosphere
+    └── utils.js           # Utility functions
+```
 
 ---
 
-## 📜 Credits & License
+## 🎮 How to Use
 
-Created as a tactical research tool for curious minds. 
-- **Fonts**: [Special Elite](https://fonts.google.com/specimen/Special+Elite), [Courier Prime](https://fonts.google.com/specimen/Courier+Prime).
-- **Icons**: Standard UTF-8 Glyph set for zero dependency.
+1. **Open a Case**: Click "OPEN CASE FILE" on the landing page
+2. **Investigate**: Read the briefing, examine artifacts, follow Wikipedia links
+3. **Document**: Take notes in the interactive notebook
+4. **Analyze**: Use timestamps, track your progress, look for patterns
+5. **Conclude**: Develop your theory based on evidence
+6. **Submit**: Share your investigation with the community archive
 
-**Remember**: The trail is incomplete. The truth is in the details.
+---
+
+## 🌐 Deployment
+
+### GitHub Pages
+1. Go to repository Settings → Pages
+2. Select `main` branch as source
+3. Save and wait for deployment
+4. Access at: `https://username.github.io/case011/`
+
+### Netlify
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yourusername/case011)
+
+1. Click "Deploy to Netlify"
+2. Connect your GitHub account
+3. Deploy automatically
+
+### Vercel
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/case011)
+
+1. Click "Deploy with Vercel"
+2. Import your repository
+3. Deploy instantly
+
+---
+
+## 🛠️ Technology Stack
+
+- **Frontend**: Pure HTML5, CSS3, JavaScript (ES6+)
+- **Data Source**: Wikipedia API (CORS-enabled)
+- **Storage**: Browser localStorage
+- **Dependencies**: Zero! Completely standalone
+- **Fonts**: Google Fonts (Special Elite, Courier Prime, Playfair Display)
+
+---
+
+## 📚 Case Database
+
+The platform includes **66+ pre-seeded cases** across multiple categories:
+
+- 🔐 **Cryptographic**: Voynich Manuscript, Zodiac Ciphers, Beale Ciphers
+- 👤 **Disappearances**: Dyatlov Pass, D.B. Cooper, Amelia Earhart
+- 🏛️ **Archaeological**: Antikythera Mechanism, Nazca Lines, Göbekli Tepe
+- 👽 **Paranormal**: Roswell, Bermuda Triangle, Tunguska Event
+- 🔬 **Scientific**: Wow! Signal, Dark Matter, Fermi Paradox
+
+Plus unlimited live cases from Wikipedia's mystery categories!
+
+---
+
+## 🔒 Privacy & Security
+
+- ✅ **No tracking** - Zero analytics or cookies
+- ✅ **No accounts** - No registration required
+- ✅ **Local storage** - All data stays on your device
+- ✅ **No API keys** - Completely free to use
+- ✅ **Open source** - Fully transparent code
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+### Ways to Contribute:
+- 🐛 Report bugs
+- 💡 Suggest features
+- 📝 Add new case seeds
+- 🎨 Improve UI/UX
+- 📖 Enhance documentation
+- 🌍 Translate to other languages
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **Wikipedia** - For providing free access to human knowledge
+- **Google Fonts** - For beautiful typography
+- **The Mystery Community** - For keeping curiosity alive
+
+---
+
+## 📞 Support
+
+- 📧 Open an [Issue](https://github.com/yourusername/case011/issues)
+- 💬 Start a [Discussion](https://github.com/yourusername/case011/discussions)
+- ⭐ Star this repo if you find it interesting!
+
+---
+
+## 🎯 Roadmap
+
+- [ ] Multi-language support
+- [ ] Advanced search filters
+- [ ] Case difficulty ratings
+- [ ] Collaborative investigations
+- [ ] Mobile app (PWA)
+- [ ] Dark web case integration
+- [ ] AI-powered clue suggestions
+
+---
+
+<div align="center">
+
+**Remember: The trail is incomplete. The truth is in the details.**
+
+Made with 🔍 for curious minds
+
+[⬆ Back to Top](#-case011-archives-of-the-unexplained)
+
+</div>
